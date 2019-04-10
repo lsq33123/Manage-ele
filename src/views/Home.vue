@@ -90,7 +90,7 @@
 export default {
   data () {
     return {
-      sysName: 'VUEADMIN',
+      sysName: 'TEST',
       collapsed: false,
       sysUserName: '',
       sysUserAvatar: '',
@@ -155,10 +155,10 @@ export default {
     }
   },
   mounted () {
-    var user = sessionStorage.getItem('user')
+    var user = localStorage.getItem('user')
     if (user) {
       user = JSON.parse(user)
-      this.sysUserName = user.name || ''
+      this.sysUserName = user.account || ''
       this.sysUserAvatar = user.avatar || ''
     }
   }

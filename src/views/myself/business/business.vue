@@ -132,7 +132,7 @@
         var day = new Date();
         var tdate = `${day.getFullYear()}-${day.getMonth() + 1}-${day.getDate()} ${day.getHours()}:${day.getMinutes()}:${day.getSeconds()}`;
 
-        import { getConceptTree,getConceptGridData,saveConceptForm,isConceptUse } from '../../../api/api';// 导入我们的api接口
+        import { getConceptTree,getConceptGridData,saveConceptForm,isConceptUse } from '@/api/myApi';// 导入我们的api接口
 export default {
     data(){
         return{
