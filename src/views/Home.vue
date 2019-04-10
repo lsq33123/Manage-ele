@@ -140,7 +140,8 @@ export default {
       this.$confirm('确认退出吗?', '提示', {
         // type: 'warning'
       }).then(() => {
-        sessionStorage.removeItem('user')
+        localStorage.removeItem('token')
+        localStorage.removeItem('user')
         _this.$router.push('/login')
       }).catch(() => {
 
@@ -290,7 +291,7 @@ export default {
 
       .content-container {
         flex: 1;
-        overflow-y: scroll;
+        overflow-y: auto;
         padding: 20px;
 
         .breadcrumb-container {

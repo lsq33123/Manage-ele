@@ -1,7 +1,7 @@
 <template>
     <div>
-        <el-container style="height:100%;">
-            <el-header direction="vertical" style="line-height: 60px;">
+        <el-container style="height:100%;width:100%">
+            <el-header direction="vertical" style="line-height: 60px;padding:0px;">
                 <el-select placeholder="总部部门"  clearable style="width:150px;" v-model="center">
                     <el-option v-for="item in centerList" :key="item.text" :value="item.text" :label="item.text"></el-option>
                     </el-select>
@@ -21,14 +21,14 @@
                 <el-button icon="el-icon-circle-check-outline" @click="isdisabled(0)">启用</el-button>
                 <el-button icon="el-icon-circle-close-outline" @click="isdisabled(1)">禁用</el-button>
             </el-header>
-            <el-container style="height:calc(100vh - 60px)">
+            <el-container >
                 <el-aside width="200px" class="asideSty">
                         <el-tree ref="tree" accordion :data="menuData" :props="defaultProps" node-key="id"  @node-click="handleNodeClick"></el-tree>
                 </el-aside>
                 <el-container>
                     <el-main style="padding:0;">
-                        <el-table ref="singleTable" :data="tableData" border highlight-current-row style="width: 100%;"
-                            height="calc(100vh - 92px)" @selection-change="getDetails" @row-click="handleRowChange">
+                        <el-table ref="singleTable" :data="tableData" border highlight-current-row style="width:100%" v-loading="listLoading"
+                            :height="tableHeight" @selection-change="getDetails" @row-click="handleRowChange">
                             <el-table-column type="index" label="序号" header-align="center" min-width="60">
                             </el-table-column>
                             <el-table-column label="概念名称、类型及定义" header-align="center">
@@ -128,7 +128,8 @@
         var gnlx = [ {id : '基础类',	text : '基础类'}, {id : '专业类',text : '专业类'} ,{id : '管理类',	text : '管理类'} ];
 	    var zblx = [ {id : '结果指标',	text : '结果指标'}, {id : '效率指标',text : '效率指标'},{id : '/',	text : '/'}  ];
         var zt = [  {id : '0',text : '启用'} ,{id : '1',	text : '禁用'} ];
-        var token = "GChsLTNWHGYwfwkDDZQa";
+        //var token = "ZxLZWnlOKTYZUPXdeqhf";
+        //var token = localStorage.getItem('token');
         var day = new Date();
         var tdate = `${day.getFullYear()}-${day.getMonth() + 1}-${day.getDate()} ${day.getHours()}:${day.getMinutes()}:${day.getSeconds()}`;
 
@@ -150,6 +151,9 @@ export default {
             currRow:{},//当前选中行数据
             dialogTitle:'',//弹出框标题
             isShow:false,//form不能填写
+            listLoading:false,//加载的圈圈
+            tableHeight:'',
+            token:localStorage.getItem('token'),
             defaultProps: {
                 children: 'children',
                 label: 'text'
@@ -179,7 +183,16 @@ export default {
             pagetotal: 0//总条数
         }
     },
+    mounted(){
+        this.tableHeight = window.innerHeight - this.$refs.singleTable.$el.offsetTop - 120;
+    //window.innerHeight:浏览器的可用高度
+    //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
+    //后面的50：根据需求空出的高度，自行调整
+
+    },
     created(){
+     
+        this.listLoading=true;
         this.loadData() ;
         this.loadMenuTree() ;
         this.formRules.name[0].validator = this.centerNameRule;
@@ -203,7 +216,7 @@ export default {
             var text = node.node.data.text;
             var isLeaf = node.node.isLeaf;
             var params = {
-                token:token,
+                token:this.token,
                 center:text,
             };
             this.center = '';
@@ -212,14 +225,14 @@ export default {
                 params={
                     conceptType:text,
                     center:this.$refs.tree.getNode(id).parent.data.text,
-                    token:token,
+                    token:this.token,
                 }
                 this.conceptType = text
             }else{
                 if(text == '华胜连锁'){
                     params={
                         center:'',
-                        token:token,
+                        token:this.token,
                     }
                     this.center = '';
                 }else{
@@ -240,7 +253,7 @@ export default {
 
                 pageIndex: this.currentPage - 1,
                 pageSize: this.pageSize,
-                token: token
+                token: this.token
             };
             this.getData(params);
         },
@@ -250,14 +263,16 @@ export default {
                 var data = res.mm;
                 that.pagetotal = res.total;
                 that.tableData = data;
+                that.listLoading=false;
                 
             }, function (err) {
+                that.listLoading=false;
                 console.log(err);
             })
         },
         loadMenuTree(){
             var params ={
-                token: token
+                token: this.token
             };
             var that = this;
             getConceptTree(params).then(res => {
@@ -325,7 +340,7 @@ export default {
         saveForm(formEl){
             if(this.dialogTitle=='新增概念'){
                 var params = {
-                    token:token,
+                    token:this.token,
                     center:this.form.center,
                     conceptNa:this.form.name,
                     data:this.form,
@@ -347,7 +362,7 @@ export default {
             }
             if(this.dialogTitle=='修改概念'){
                 var params = {
-                    token:token,
+                    token:this.token,
                     center:this.form.center,
                     conceptNa:this.form.name,
                     data:this.form,
@@ -369,7 +384,7 @@ export default {
             }
             if(this.dialogTitle=='启用概念'){
                 var params = {
-                    token:token,
+                    token:this.token,
                     data:{
                         id:this.currRow.id,
                         operateType:'启用',
@@ -392,7 +407,7 @@ export default {
             }
             if(this.dialogTitle =='禁用概念'){
                 var params = {
-                    token:token,
+                    token:this.token,
                     data:{
                         id:this.currRow.id,
                         operateType:'禁用',
@@ -526,7 +541,8 @@ export default {
     margin: 0 !important;
     transform :translate(-50%, -50%);
     max-height: calc(100% - 30px);
-    max-width :calc(100% - 30px);
+    max-width :calc(100% - 30px)
+    
 }
 .el-dialog__body{
     padding:10px 20px;
@@ -541,3 +557,4 @@ export default {
     border-left:1px solid #ebeef5;
 }
 </style>
+

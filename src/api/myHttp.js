@@ -8,11 +8,11 @@ import axios from 'axios';
 
 // 环境的切换
 if (process.env.NODE_ENV == 'development') { 
- axios.defaults.baseURL = 'http://124.172.221.179/vapp/';
+ axios.defaults.baseURL = 'http://192.168.111.62/vapp/';
 } else if (process.env.NODE_ENV == 'debug') { 
- axios.defaults.baseURL = 'http://124.172.221.179/vapp/';
+ axios.defaults.baseURL = 'http://192.168.111.62/vapp/';
 } else if (process.env.NODE_ENV == 'production') {
- axios.defaults.baseURL = 'http://124.172.221.179/vapp/';
+ axios.defaults.baseURL = 'http://192.168.111.62/vapp/';
 }
 
 // 请求超时时间
@@ -28,6 +28,14 @@ axios.interceptors.request.use(
   // 即使本地存在token，也有可能token是过期的，所以在响应拦截器中要对返回状态进行判断
 //   const token = store.state.token;  
 //   token && (config.headers.Authorization = token);  
+
+// const USER_TOKEN = localStorage.getItem('token');
+// if (USER_TOKEN) {
+//     //config.headers.token = `${USER_TOKEN}`;
+//     config.headers.common['token'] = USER_TOKEN;
+// //config.headers.Authorization = USER_TOKEN;
+// //config.headers.Authorization = `token ${USER_TOKEN}`;
+// }
   return config; 
  }, 
  error => {  

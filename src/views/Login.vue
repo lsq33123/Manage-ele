@@ -95,8 +95,10 @@ export default {
                                 message: "密码错误！",
                                 type: "warning"
                             });
+                            this.logining = false;
                         });
                 } else {
+                    this.logining = false;
                     console.log("error submit!!");
                     return false;
                 }
