@@ -15,8 +15,13 @@ router.beforeEach((to, from, next) => {
         localStorage.removeItem('user');
         localStorage.removeItem('token');
     }
-    let user = JSON.parse(localStorage.getItem('user'))
-    if (!user && to.path !== '/login') {
+    let user = JSON.parse(localStorage.getItem('user'));
+    let token = localStorage.getItem('token');
+    if (!token && to.path !== '/login') {
+        Vue.prototype.$message({
+            type: "error",
+            message: "登录过期，请重新登录"
+         });
         next({
             path: '/login'
         })

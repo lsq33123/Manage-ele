@@ -2,6 +2,7 @@
  * 请求拦截、相应拦截、错误统一处理
  */
 import axios from 'axios';
+import { message } from 'element-ui';
 // import QS from 'qs';
 // import { Toast } from 'vant';
 // import store from '../store/index'
@@ -29,13 +30,13 @@ axios.interceptors.request.use(
 //   const token = store.state.token;  
 //   token && (config.headers.Authorization = token);  
 
-// const USER_TOKEN = localStorage.getItem('token');
-// if (USER_TOKEN) {
-//     //config.headers.token = `${USER_TOKEN}`;
-//     config.headers.common['token'] = USER_TOKEN;
-// //config.headers.Authorization = USER_TOKEN;
-// //config.headers.Authorization = `token ${USER_TOKEN}`;
-// }
+const USER_TOKEN = localStorage.getItem('token');
+if (USER_TOKEN) {
+    //config.headers.token = `${USER_TOKEN}`;
+    config.headers.common['token'] = USER_TOKEN;
+//config.headers.Authorization = USER_TOKEN;
+//config.headers.Authorization = `token ${USER_TOKEN}`;
+}
   return config; 
  }, 
  error => {  
@@ -58,11 +59,16 @@ axios.interceptors.response.use(
     // 401: 未登录    
     // 未登录则跳转登录页面，并携带当前页面的路径    
     // 在登录成功后返回当前页面，这一步需要在登录页操作。    
-    case 401:     
+       case 401:  
+       this.$messaghe({
+            message: "用户未登录，请登录",
+            type:'warning'
+        })        
      router.replace({      
       path: '/login',      
       query: { redirect: router.currentRoute.fullPath } 
      });
+
      break;
     // 403 token过期    
     // 登录过期对用户进行提示    
@@ -74,7 +80,11 @@ axios.interceptors.response.use(
     //   duration: 1000,      
     //   forbidClick: true     
     //  });   
-           alert("登录过期，请重新登录");  
+           //alert("登录过期，请重新登录");  
+           this.$messaghe({
+               message: "登录过期，请重新登录",
+               type:'warning'
+           })
      // 清除token     
      localStorage.removeItem('token');     
     //  store.commit('loginSuccess', null);     

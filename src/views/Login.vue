@@ -84,7 +84,7 @@ export default {
                                 // 将登录名使用vuex传递到Home页面
                                 //this.$store.commit('handleUserName',_this.ruleForm2.account);
                                 //sessionStorage.setItem('user', JSON.stringify(user))
-                                this.$router.push({ path: "/table" });
+                                this.$router.push({ path: "/echarts" });
                                 this.$message({
                                     message: "登录成功",
                                     type: "success"
