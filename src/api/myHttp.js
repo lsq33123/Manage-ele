@@ -30,13 +30,13 @@ axios.interceptors.request.use(
 //   const token = store.state.token;  
 //   token && (config.headers.Authorization = token);  
 
-const USER_TOKEN = localStorage.getItem('token');
-if (USER_TOKEN) {
-    //config.headers.token = `${USER_TOKEN}`;
-    config.headers.common['token'] = USER_TOKEN;
-//config.headers.Authorization = USER_TOKEN;
-//config.headers.Authorization = `token ${USER_TOKEN}`;
-}
+// const USER_TOKEN = localStorage.getItem('token');
+// if (USER_TOKEN) {
+//     //config.headers.token = `${USER_TOKEN}`;
+//     config.headers.common['token'] = USER_TOKEN;
+// //config.headers.Authorization = USER_TOKEN;
+// //config.headers.Authorization = `token ${USER_TOKEN}`;
+// }
   return config; 
  }, 
  error => {  

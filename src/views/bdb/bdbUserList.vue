@@ -19,7 +19,7 @@
             </el-main>
             <el-footer style="text-align: right;margin-right: 45px;">
                 <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage"
-                :page-sizes="[10,20,50,10]" :page-size="pageSize" :total="pageTotal"
+                :page-sizes="[10,20,50,100]" :page-size="pageSize" :total="pageTotal"
                 layout="total, sizes, prev, pager, next, jumper">
                 </el-pagination>
             </el-footer>
@@ -44,8 +44,8 @@ export default {
         };
     },
     mounted(){
+        this.tableHeight = window.innerHeight - this.$refs.table.$el.offsetTop - 120;
         this.loadData();
-        this.tableHeight = window.innerHeight - this.$refs.table.$el.offsetTop - 50;
     //window.innerHeight:浏览器的可用高度
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
     //后面的50：根据需求空出的高度，自行调整
@@ -91,6 +91,9 @@ export default {
 };
 </script>
 <style lang='less' scoped>
-
+.el-footer{
+    height: auto !important;
+    padding:0px !important;
+}
 
 </style>

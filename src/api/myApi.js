@@ -3,6 +3,11 @@
  */
 import { get, post } from '@/api/myHttp';
 
+var easyMockUrl = 'https://easy-mock.com/mock/5cb07ee7feb02568367811ed/manage-ele';
+
+// 获取 商务概念菜单树
+export const getTestUserList = p => post(easyMockUrl+'/userList', p);
+
 // 获取 商务概念菜单树
 export const getConceptTree = p => post('com.hs.manager.impl.Business.BusinessConcept_Tree.biz.ext', p);
 
