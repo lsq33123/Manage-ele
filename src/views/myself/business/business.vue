@@ -20,6 +20,7 @@
                 <el-button icon="el-icon-edit" @click="editRow">修改</el-button>
                 <el-button icon="el-icon-circle-check-outline" @click="isdisabled(0)">启用</el-button>
                 <el-button icon="el-icon-circle-close-outline" @click="isdisabled(1)">禁用</el-button>
+                {{tableHeight}}
             </el-header>
             <el-container >
                 <el-aside width="200px" class="asideSty">
@@ -28,7 +29,8 @@
                 <el-container>
                     <el-main style="padding:0;">
                         <el-table ref="singleTable" :data="tableData" border highlight-current-row style="width:100%" v-loading="listLoading"
-                            :height="tableHeight" @selection-change="getDetails" @row-click="handleRowChange">
+                            :height="tableHeight"
+                            @selection-change="getDetails" @row-click="handleRowChange">
                             <el-table-column type="index" label="序号" header-align="center" min-width="60">
                             </el-table-column>
                             <el-table-column label="概念名称、类型及定义" header-align="center">
@@ -152,7 +154,7 @@ export default {
             dialogTitle:'',//弹出框标题
             isShow:false,//form不能填写
             listLoading:false,//加载的圈圈
-            tableHeight:'',
+            tableHeight: window.innerHeight - 160 - 120,
             token:localStorage.getItem('token'),
             defaultProps: {
                 children: 'children',
@@ -184,14 +186,10 @@ export default {
         }
     },
     mounted(){
-        this.tableHeight = window.innerHeight - this.$refs.singleTable.$el.offsetTop - 120;
-    //window.innerHeight:浏览器的可用高度
-    //this.$refs.table.$el.offsetTop：表格距离浏览器的高度
-    //后面的50：根据需求空出的高度，自行调整
 
     },
     created(){
-     
+    	
         this.listLoading=true;
         this.loadData() ;
         this.loadMenuTree() ;
