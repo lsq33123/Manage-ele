@@ -36,7 +36,7 @@ export default {
         return {
             tableData:[],
             token:localStorage.getItem('token'),
-            tableHeight:'',
+            tableHeight:window.innerHeight - 160 - 50,
             
             currentPage: 0, //当前页
             pageSize: 20, //分页数
@@ -44,7 +44,6 @@ export default {
         };
     },
     mounted(){
-        this.tableHeight = window.innerHeight - this.$refs.table.$el.offsetTop - 120;
         this.loadData();
     //window.innerHeight:浏览器的可用高度
     //this.$refs.table.$el.offsetTop：表格距离浏览器的高度

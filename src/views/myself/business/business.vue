@@ -154,7 +154,7 @@ export default {
             dialogTitle:'',//弹出框标题
             isShow:false,//form不能填写
             listLoading:false,//加载的圈圈
-            tableHeight: window.innerHeight - 160 - 120,
+            tableHeight: window.innerHeight - 160 - 50,
             token:localStorage.getItem('token'),
             defaultProps: {
                 children: 'children',
@@ -189,7 +189,6 @@ export default {
 
     },
     created(){
-    	
         this.listLoading=true;
         this.loadData() ;
         this.loadMenuTree() ;
@@ -242,6 +241,7 @@ export default {
             this.getData(params);
         },
         loadData() {
+            this.listLoading=true;
             var params = {
                 center:this.center,
                 conceptName:this.conceptName,

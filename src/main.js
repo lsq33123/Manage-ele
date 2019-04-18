@@ -25,6 +25,10 @@ router.beforeEach((to, from, next) => {
         next({
             path: '/login'
         })
+    } else if (to.path === '/') {
+        next({
+            path: '/login' //访问根目录是也跳转登录页面
+        })
     } else {
         next()
     }
