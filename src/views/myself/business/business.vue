@@ -20,7 +20,6 @@
                 <el-button icon="el-icon-edit" @click="editRow">修改</el-button>
                 <el-button icon="el-icon-circle-check-outline" @click="isdisabled(0)">启用</el-button>
                 <el-button icon="el-icon-circle-close-outline" @click="isdisabled(1)">禁用</el-button>
-                {{tableHeight}}
             </el-header>
             <el-container >
                 <el-aside width="200px" class="asideSty">

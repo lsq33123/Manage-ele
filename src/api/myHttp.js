@@ -36,22 +36,22 @@ error => {
 // 响应拦截器
 axios.interceptors.response.use( 
 response => {  
-    if (response.status === 200) {   
-            if (response.data.errCode == 'E') {
-                // Vue.prototype.$messaghe({
+        if (response.status === 200) {   
+            if (response.data.errMsg && response.data.errMsg == '登录超时') {
+                // this.$messaghe({
                 //     message: "登录过期，请重新登录",
                 //     type:'warning'
                 //     })
-                  // 清除token     
-                  localStorage.removeItem('token');     
-                 //  store.commit('loginSuccess', null);     
-                  // 跳转登录页面，并将要浏览的页面fullPath传过去，登录成功后跳转需要访问的页面
-                 setTimeout(() => {      
-                     router.replace({path: '/login', query: {redirect: router.currentRoute.fullPath}});     
-                  }, 1000);  
-            } else {
-                return Promise.resolve(response);  
-        }
+                // 清除token     
+                localStorage.removeItem('token');
+                //  store.commit('loginSuccess', null);     
+                // 跳转登录页面，并将要浏览的页面fullPath传过去，登录成功后跳转需要访问的页面
+                router.push({
+                    path: '/login',
+                    query: { redirect: router.currentRoute.fullPath }
+                });
+            }
+                return Promise.resolve(response); 
 	} else {   
 		return Promise.reject(response);  
 	} 

@@ -17,7 +17,7 @@
 
     <!--列表-->
     <el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="selsChange"
-              style="width: 100%;">
+              style="width: 100%;" :height="tableHeight">
       <el-table-column type="selection" width="55">
       </el-table-column>
       <el-table-column type="index" width="60">
@@ -110,7 +110,7 @@
 import util from '../../common/js/util'
 // import NProgress from 'nprogress'
 import { getUserListPage, removeUser, batchRemoveUser, editUser, addUser } from '../../api/api'
-import {getTestUserList}from '@/api/myApi'
+import { getTestUserListByPage,getTestUserList }from '@/api/myApi'
 
 export default {
   data () {
@@ -123,6 +123,7 @@ export default {
       page: 1,
       listLoading: false,
       sels: [], // 列表选中列
+      tableHeight: window.innerHeight - 160 - 120,
 
       editFormVisible: false, // 编辑界面是否显示
       editLoading: false,
@@ -172,11 +173,12 @@ export default {
     getUsers () {
       let para = {
         page: this.page,
-        name: this.filters.name
+        name: this.filters.name,
+        pageSize:10
       }
       this.listLoading = true
-      getTestUserList(para).then((res) => {
-        this.total = res.data.total
+      getTestUserListByPage(para).then((res) => {
+        this.total = res.count
         this.users = res.data
         this.listLoading = false
       })

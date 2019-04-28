@@ -5,8 +5,11 @@ import { get, post } from '@/api/myHttp';
 
 var easyMockUrl = 'https://easy-mock.com/mock/5cb07ee7feb02568367811ed/manage-ele';
 
-// 获取 商务概念菜单树
+// 获取 用户列表  不分页
 export const getTestUserList = p => post(easyMockUrl+'/userList', p);
+
+// 获取 用户列表  分页
+export const getTestUserListByPage = p => get(easyMockUrl+'/userListByPage', p);
 
 // 获取 商务概念菜单树
 export const getConceptTree = p => post('com.hs.manager.impl.Business.BusinessConcept_Tree.biz.ext', p);
@@ -30,3 +33,7 @@ export const getPlanList = p => post('com.hs.plan.PerformanceAssessment.PA_List_
 export const getPlanDetailA= p => post('com.hs.plan.PerformanceAssessment.PA_Detail_Search.biz.ext', p);
 //获取明细表二
 export const getPlanDetailB = p => post('com.hs.plan.PerformanceAssessment.PA_Detail_Searchb.biz.ext', p);
+//获取分店地图分布
+export const getCompAddress = p => post('http://wechat.harsons.cn/api.php?m=ApiErp&s=getCity&sign=hrs2Nis_da32w45fba&_=1555598503499', p);
+//获取分店地图分布
+export const getHTML = p => get('https://www.cnblogs.com/leeshine-luo/p/5246076.html', p);

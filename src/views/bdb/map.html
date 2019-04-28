@@ -1,0 +1,921 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!--
+  - Author(s): Administrator
+  - Date: 2018-03-05 17:13:20
+  - Description:
+-->
+<head>
+<title>热力地图</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+ <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=tO2SsUpep6SNN9aiNKzGiBI8"></script>
+
+    <style type="text/css">
+      html, body{
+        margin:0;padding:0;border:0;width:100%;height:100%;overflow:hidden;
+    }
+	ul, li {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		float: left;
+	}
+
+	html {
+		height: 100%
+	}
+
+	body {
+		height: 100%;
+		margin: 0px;
+		padding: 0px;
+		font-family: "微软雅黑";
+	}
+
+	#container {
+		height: 100%;
+		width: 100%;
+	}
+
+	#r-result {
+		width: 100%;
+	}
+
+	* {
+		margin: 0;
+		padding: 0;
+		font-size: 12px;
+		font-weight: normal;
+	}
+
+	.top {
+		padding: 10px;
+		background: #eee;
+	}
+
+	.parent {
+		width: 100%;
+		height: 100%;
+	}
+	div img {
+	    max-width: none;
+	    vertical-align: middle;
+	}
+
+.pull-left {
+	float: left
+}
+.media, .media-body {
+	overflow: hidden;
+	*overflow: visible;
+	zoom: 1
+}
+
+.media, .media .media {
+	margin-top: 15px
+}
+
+.media:first-child {
+	margin-top: 0
+}
+
+.media-object {
+	display: block
+}
+
+.media-heading {
+	margin: 0 0 5px
+}
+
+.media>.pull-left {
+	margin-right: 10px
+}
+
+.media>.pull-right {
+	margin-left: 10px
+}
+
+.media-list {
+	margin-left: 0;
+	list-style: none
+}
+
+	</style>
+</head>
+<body>
+
+<div class="parent" style="width:100%;height:100%;">
+
+<!-- 		 <div class="top">
+			<select class="chzn-select" name="type" id="type"
+				data-placeholder="客户类型" style="vertical-align: top; width: 90px;">
+				<option value="-1">客户类型</option>
+				<option value="1">新客户</option>
+				<option value="0">老客户</option>
+				<option value="2">潜客</option>
+			</select> <select class="chzn-select" name="areaId" id="areaId"
+				data-placeholder="请选择区域" style="vertical-align: top; width: 120px;">
+			</select> <select class="chzn-select" name="compCode" id="compCode"
+				data-placeholder="请选择门店" style="vertical-align: top; width: 120px;">
+			</select>
+		</div>    -->
+<!-- 		
+    <div class="nui-toolbar"   style=" " id="toolbar1">
+		       区域：	<input name="area" id="area"
+				emptyText="区域"   multiSelect="false"
+				class="nui-combobox" textfield="deptName" valuefield="deptCode"
+				emptytext="请选择..." allowinput="true" shownullitem="true"
+				nullitemtext="请选择..."  onvaluechanged="onAreaChange"
+				datafield="complist"
+				url="com.saas.commons.model.orgcomponent.getAreaName.biz.ext"
+				required="false" requiredErrorText="请选择区域"
+				valueFromSelect="true"/>
+
+        店名：	<input name="compName" id="compName"
+					emptyText="分店名称" multiSelect="false"
+				class="nui-combobox" textfield="shortName" valuefield="compID"
+				emptytext="请选择..." allowinput="true" shownullitem="true"
+				nullitemtext="请选择..."    onvaluechanged="onStoreChange"
+				datafield="complist"
+				url="com.saas.commons.model.orgcomponent.getUserCompGover.biz.ext"
+				required="false" requiredErrorText="请选择分店"
+				valueFromSelect="true"/>
+
+店号：	<input name="compCode" id="compCode"
+					emptyText="店号" multiSelect="false" style="width:70px;"
+				class="nui-combobox" textfield="compCode" valuefield="compCode"
+				allowinput="true"
+				 onvaluechanged="search_Code()"
+				datafield="complist"
+				url="com.saas.commons.model.orgcomponent.getUserCompGover.biz.ext"
+				required="false" requiredErrorText="请选择分店"
+				valueFromSelect="true"/>
+	      店型： 		<input  class="nui-textbox" name="InvestLevel" id="InvestLevel"  style="width:70px;" allowInput="false"  >
+          成长阶段：  <input  class="nui-textbox" name="compAgeType" id="compAgeType"  style="width:70px;" allowInput="false"  >
+					<input class="nui-hidden" name="compid" id="compid" />
+    </div>
+ -->
+
+		<div id="container"></div>
+		<!-- <div id="myModal1" class="modal hide fade"
+			style="width: 80%; margin-left: 0px; transform: translate(-50%, 0); height: 80%;"
+			tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+			aria-hidden="true">
+			<iframe src="javascript:;" id="detail"
+				style="margin: 0px auto; width: 100%; height: 100%; border: 0px; padding: 0px;"></iframe>
+		</div> -->
+
+</div>
+	<script type="text/javascript">
+    
+
+/*
+	var area = nui.get("area"); //区域
+	var compname = nui.get("compName"); //店名
+	var compcode = nui.get("compCode"); //店号
+	var investlevel = nui.get("InvestLevel"); //店型
+	var compagetype = nui.get("compAgeType"); //成长阶段
+	var date = nui.get("date"); //日期
+
+	investlevel.disable(); //店型-数据是带出来的  不需填写
+	compagetype.disable(); //成长阶段-数据是带出来的  不需填写
+
+	///////////////////////////区域值-发生变化时的事件/////////////////////////////////
+	function onAreaChange(e) {
+	    var url = null;
+	    var record = e.selected;
+	    var comp = nui.get("compName");
+	    var code = nui.get("compCode");
+	    if (record) {
+	        var url = "com.saas.commons.model.orgcomponent.getUserCompGover.biz.ext?action=oneArea&compid=" + record.deptCode;
+	    } else {
+	        var url = "com.saas.commons.model.orgcomponent.getUserCompGover.biz.ext";
+	    }
+	    comp.load(url);
+	    code.load(url);
+        nui.get("compName").setValue(null);
+        nui.get("InvestLevel").setValue(null);
+        nui.get("compAgeType").setValue(null);
+        nui.get("compid").setValue(null);
+        nui.get("compCode").setValue(null);
+	    search_Data();
+	}
+
+
+	///////////////////////////门店值-发生变化时的事件/////////////////////////////////
+	function onStoreChange(e) {
+
+	    var record = e.selected;
+
+	    if (record) {
+	        nui.get("compCode").setValue(record.compCode);
+	        nui.get("InvestLevel").setValue(null);
+	        nui.get("compAgeType").setValue(null);
+	        search_Code();
+	        //  nui.get("area").setValue(record.areaID);
+	        //  nui.get("compid").setValue(record.compID);
+	        //  nui.get("compCode").setValue(record.compCode);
+	        //  nui.get("compAgeType").setValue(record.compAgeType);
+	    } else {
+	        nui.get("compName").setValue(null);
+	        nui.get("InvestLevel").setValue(null);
+	        nui.get("compAgeType").setValue(null);
+	        nui.get("compid").setValue(null);
+	        nui.get("compCode").setValue(null);
+	    }
+
+
+	}
+
+
+	///////////////////////////店号-发生变化时的事件/////////////////////////////////
+	function search_Code() {
+	    var dcode = nui.get("compCode").value;
+
+	    nui.ajax({ //整体2222222
+	        url: "com.hs.assets.impl.CustomerAssets.search_Growthlevel.biz.ext",
+	        data: {
+	            compcode: dcode
+	        },
+	        type: "post",
+	        //  cache : false,
+	        async: false, //同步执行，返回成功后才能进行下面的操作
+	        success: function (text) {
+	            var m = nui.decode(text.mm[0]);
+	            nui.get("area").setValue(m.areaid);
+	            setStoreUrl();
+	            nui.get("compName").setValue(m.compid);
+	            nui.get("compCode").setValue(m.compcode);
+	            nui.get("compAgeType").setValue(m.growthstage);
+	            nui.get("InvestLevel").setValue(m.investlevel);
+
+	        },
+	    });
+	    search_Data(0);
+	    //search_Time();
+	}
+
+	////////////门店编号值发生时 重新设置门门店的URL
+
+	function setStoreUrl() {
+	    var xarea = nui.get("area").getValue();
+	    var compa = nui.get("compName");
+	    var codea = nui.get("compCode");
+	    if (xarea != "" && xarea != null) {
+	        var url = "com.saas.commons.model.orgcomponent.getUserCompGover.biz.ext?action=oneArea&compid=" + xarea;
+	    } else {
+	        var url = "com.saas.commons.model.orgcomponent.getUserCompGover.biz.ext";
+	    }
+	    compa.load(url);
+	    codea.load(url);
+	}
+	///////////////////////////共用的查找函数/////////////////////////////////
+
+	   //search_Data(0);//初始化 就要执行
+	function search_Data(e) {
+	    var form = new nui.Form("#toolbar1");
+	    var data = form.getData();
+	    var ar = null;
+	    var code = null;
+	    var name = null;
+	    var id = null;
+	    var datestring = null;
+
+	    if (data.date != "" || data.date != null) { //日期为必定传输参数
+	        var date = formatDate(new Date(data.date));
+	        datestring = date.replace(new RegExp(/(-)/g), "");
+	    }
+
+	    //      if (data.compCode != "" || data.compCode != null) {
+	    //                    code = data.compCode;
+	    //                } else if (data.compName != "" || data.compName != null) {
+	    //                    name = data.compName;
+	    //                } else {
+	    //                    ar = data.area;
+	    //                } 
+	    //  code="003";
+	    //id= "'COM20170719000001','COM20170908000001','COM20170908000002','COM20170908000003','COM20170926000002','COM20170926000003'";
+
+	    //   name ="广州科韵路店";
+	    ar = data.area;
+	    code = data.compCode;
+	    id = data.compName;
+
+	    //Search(ar, code, datestring, id);
+	}
+
+////////////////关闭函数///////
+	function close() {
+	    if (window.CloseOwnerWindow)
+	        return window.CloseOwnerWindow('');
+	    else
+	        window.lclose();
+	}
+
+*/
+    </script>
+</body>
+</html>
+<script type="text/javascript">
+	var accessToken = null;//$.cookie('accessToken');
+	var map = new BMap.Map("container"); // 创建地图实例
+	var opts = {
+		width : 286, // 信息窗口宽度
+		height : 120, // 信息窗口高度
+		enableMessage : true
+	//设置允许信息窗发送短息
+	};
+	var markers = [];
+	var point = new BMap.Point(114.31667, 30.51667);
+	var areaId = "COM20120329000001";
+
+	//用户画像
+	var opts2 = {
+		width : 800, // 信息窗口宽度
+		height : 650, // 信息窗口高度
+		title : "用户画像", // 信息窗口标题
+		enableMessage : true
+	//设置允许信息窗发送短息
+	};
+	var radius = null;
+	var lng = null;
+	var lat = null;
+	var pageSize = 10;
+	$(function() {
+
+		/* $(".parent").on('click', '.j-myModal1', function() {
+			alert('sss')
+			$('#myModal1').modal('toggle');
+		var clientCode = $(this).attr('clicode');
+		alert(clientCode);
+		var openid = $(this).attr('openid');
+		var url = "portray/detail?1=1";
+		if (clientCode) {
+			url += "&clientCode=" + clientCode;
+		}
+		if (openid) {
+			url += "&openID=" + openid;
+		}
+		window.parent.jzts();
+		if (window.screen.availWidth < 750) {
+			location.href=url
+		} else {
+		$("#detail").attr('src', url);
+		}
+
+		}); */
+
+		var top_right_control = new BMap.ScaleControl({
+			anchor : BMAP_ANCHOR_TOP_RIGHT
+		});// 右上角，添加比例尺
+		var top_right_navigation = new BMap.NavigationControl({
+			anchor : BMAP_ANCHOR_TOP_RIGHT
+		}); //右上角
+		//添加控件和比例尺
+		map.addControl(top_right_control);
+		map.addControl(top_right_navigation);
+
+		map.centerAndZoom("郑州", 5); // 初始化地图，设置中心点坐标和地图级别
+		map.enableScrollWheelZoom(); // 允许滚轮缩放
+
+		/* var myDis = new BMapLib.DistanceTool(map);
+		map.addEventListener("load",function(){
+			myDis.open();  //开启鼠标测距
+		}); */
+		/*  var marker = null;
+		//单击获取点击的经纬度
+		map.addEventListener("click", function(e) {
+			map.removeOverlay(marker);
+			//alert(e.point.lng + "," + e.point.lat);
+			marker = new BMap.Marker(e.point); // 创建标注
+			map.addOverlay(marker); // 将标注添加到地图中
+			//marker.enableDragging();
+		});  */
+
+		var styleOptions = {
+			strokeColor : "red", //边线颜色。
+			fillColor : "red", //填充颜色。当参数为空时，圆形将没有填充效果。
+			strokeWeight : 3, //边线的宽度，以像素为单位。
+			strokeOpacity : 0.8, //边线透明度，取值范围0 - 1。
+			fillOpacity : 0.6, //填充的透明度，取值范围0 - 1。
+			strokeStyle : 'solid' //边线的样式，solid或dashed。
+		}
+		var overlays = [];
+
+		//实例化鼠标绘制工具
+		var drawingManager = new BMapLib.DrawingManager(map, {
+			isOpen : false,
+			drawingType : BMAP_DRAWING_CIRCLE,
+			enableDrawingTool : false,
+			circleOptions : styleOptions
+		});
+
+		drawingManager.setDrawingMode(BMAP_DRAWING_CIRCLE);
+		//添加鼠标绘制工具监听事件，用于获取绘制结果
+		drawingManager.addEventListener("circlecomplete", function(e, overlay) {
+			clearAll();
+			if (overlay.getRadius() != 0) {
+				/* alert(' 半径：' + overlay.getRadius());
+				alert(' 中心点：' + overlay.getCenter().lng + ","
+						+ overlay.getCenter().lat); */
+				overlays.push(overlay);
+				radius = overlay.getRadius();
+				lng = overlay.getCenter().lng;
+				lat = overlay.getCenter().lat;
+				openInfoWindow(1, pageSize, radius, lng, lat);
+			}
+		});
+		function clearAll() {
+			for (var i = 0; i < overlays.length; i++) {
+				map.removeOverlay(overlays[i]);
+			}
+			overlays.length = 0
+		}
+
+		if (!isSupportCanvas()) {
+			alert('热力图目前只支持有canvas支持的浏览器,您所使用的浏览器不能使用热力图功能~')
+		}
+
+		var gradient = {
+			'0.1' : 'rgb(0, 0, 255)',
+			'0.5' : 'rgb(0, 128, 0)',
+			'0.8' : 'rgb(255, 255, 0)',
+			'1' : 'rgb(255, 0, 0)'
+		};
+		heatmapOverlay = new BMapLib.HeatmapOverlay({
+			"radius" : 10,
+			"gradient" : gradient,
+			"opacity" : 0
+		});
+		map.addEventListener("zoomend", function() {
+			if (map.getZoom() >= 13) {
+				gradient = {
+					'0.1' : 'rgb(146, 189, 244)',
+					'0.5' : 'rgb(0, 128, 0)',
+					'0.8' : 'rgb(255, 255, 0)',
+					'1' : 'rgb(255, 0, 0)'
+				};
+				heatmapOverlay.setOptions({
+					"radius" : 4,
+					"gradient" : gradient,
+					"opacity" : 100
+				});
+				drawingManager.open();
+				/* var areaId = $("#areaId").val();
+				var shopCode = $("#compCode").val();
+				addMarker(areaId, shopCode); */
+			} else {
+				gradient = {
+					'0.1' : 'rgb(0, 0, 255)',
+					'0.5' : 'rgb(0, 128, 0)',
+					'0.8' : 'rgb(255, 255, 0)',
+					'1' : 'rgb(255, 0, 0)'
+				};
+				heatmapOverlay.setOptions({
+					"radius" : 10,
+					"gradient" : gradient,
+					"opacity" : 0
+				});
+				drawingManager.close();
+				clearAll();
+			}
+		});
+
+		map.addOverlay(heatmapOverlay);
+
+		//加载热力图
+		addHeatmap(null, "COM20120329000001", null);
+
+		//区域数据填充
+		/* $.ajax({
+			type : "POST",
+			url : './portray/getAreaList.json',
+			data : {
+				accessToken : accessToken
+			},
+			dataType : 'json',
+			cache : false,
+			//headers: headers,
+			success : function(data) {
+				if (data.status == "success") {
+					//加载数据
+					var json = data.data;
+
+					$.each(json, function(index, item) {
+						//alert(item.areaId);
+						if (item.areaId == areaId) {
+							$("#areaId").append(
+									"<option value='"+item.areaId+"' selected>"
+											+ item.areaName + "</option>");
+						} else {
+							$("#areaId").append(
+									"<option value='"+item.areaId+"'>"
+											+ item.areaName + "</option>")
+						}
+
+					});
+					$("#areaId").trigger("liszt:updated");
+				} else {
+					alert(data.message);
+				}
+			},
+			error : function(data) {
+				// view("异常！");
+				//alert("系统异常");
+			}
+		});
+
+		$.ajax({
+			type : "POST",
+			url : './portray/getCompanyShopList.json',
+			data : {
+				accessToken : accessToken,
+				areaId : areaId
+			},
+			dataType : 'json',
+			cache : false,
+			//headers: headers,
+			success : function(data) {
+				if (data.status == "success") {
+					//加载数据
+					$("#compCode").append("<option value=''>请选择门店</option>");
+					var json = data.data;
+					$.each(json, function(index, item) {
+						//alert(item.areaId);
+						$("#compCode").append(
+								"<option value='"+item.shopCode+"'>"
+										+ item.shopShortName + "</option>")
+					});
+					$("#compCode").trigger("liszt:updated");
+				} else {
+					alert(data.message);
+				}
+			},
+			error : function(data) {
+				// view("异常！");
+				//alert("系统异常");
+			}
+		}); */
+		addCompLatLng(areaId, null);
+
+		//动态填充门店数据；更新热点
+		$("#areaId").change(
+				function() {
+					var areaId = $("#areaId").val();
+					var isNewcust = $("#type").val();
+
+					addHeatmap(isNewcust, areaId, null);
+					addCompLatLng(areaId, null);
+					$("#compCode option").remove();
+					$("#compCode").append("<option value=''>请选择门店</option>");
+					if (areaId == "") {
+						return;
+					}
+
+					$.ajax({
+						type : "POST",
+						url : './portray/getCompanyShopList.json',
+						data : {
+							accessToken : accessToken,
+							areaId : areaId
+						},
+						dataType : 'json',
+						cache : false,
+						//headers: headers,
+						success : function(data) {
+							if (data.status == "success") {
+								//加载数据
+								var json = data.data;
+								$.each(json, function(index, item) {
+									//alert(item.areaId);
+									$("#compCode").append(
+											"<option value='"+item.shopCode+"'>"
+													+ item.shopShortName
+													+ "</option>")
+								});
+								$("#compCode").trigger("liszt:updated");
+							} else {
+								alert(data.message);
+							}
+						},
+						error : function(data) {
+							// view("异常！");
+							//alert("系统异常");
+						}
+					});
+				});
+
+		$("#compCode").change(function() {
+			var areaId = $("#areaId").val();
+			var shopCode = $("#compCode").val();
+			var isNewcust = $("#type").val();
+
+			addHeatmap(isNewcust, areaId, shopCode);
+			addCompLatLng(areaId, shopCode);
+		});
+		//客户类型选择
+		$("#type").change(function() {
+			var isNewcust = $("#type").val();
+			var areaId = $("#areaId").val();
+			var shopCode = $("#compCode").val();
+			addHeatmap(isNewcust, areaId, shopCode);
+		});
+
+	});
+
+	function openMyModal(obj) {
+		$('#myModal1').modal('toggle');
+		var clientCode = obj.getAttribute('clicode');
+		var openid = obj.getAttribute('openid')
+		var url = "portray/detail?1=1";
+		if (clientCode) {
+			url += "&clientCode=" + clientCode;
+		}
+		if (openid) {
+			url += "&openID=" + openid;
+		}
+		window.parent.jzts();
+		if (window.screen.availWidth < 750) {
+			location.href = url
+		} else {
+			$("#detail").attr('src', url);
+		}
+	};
+
+	function addHeatmap(isNewcust, areaId, shopCode) {
+		$.ajax({
+			type : "POST",
+			url : './portray/getClientLatLngList.json',
+			data : {
+				accessToken : accessToken,
+				areaId : areaId,
+				shopCode : shopCode,
+				isNewcust : isNewcust
+			},
+			dataType : 'json',
+			cache : false,
+			//headers: headers,
+			success : function(data) {
+				if (data.status == "success") {
+					//加载数据
+					heatmapOverlay.setDataSet({
+						data : data.data,
+						max : 50
+					});
+					heatmapOverlay.show();
+				} else {
+					alert(data.message);
+				}
+			},
+			error : function(data) {
+				// view("异常！");
+				//alert("系统异常");
+			}
+		});
+	};
+
+	function addMarker(areaId, shopCode) {
+		$.ajax({
+			type : "POST",
+			url : './portray/getClientLatLngList.json',
+			data : {
+				accessToken : accessToken,
+				areaId : areaId,
+				shopCode : shopCode
+			},
+			dataType : 'json',
+			cache : false,
+			//headers: headers,
+			success : function(data) {
+				if (data.status == "success") {
+					//加载数据
+					$.each(data.data, function(index, item) {
+						var marker = new BMap.Marker(new BMap.Point(item.lng,
+								item.lat)); // 创建标注
+						var content = item.compName;
+						markers.push(marker);
+						//map.addOverlay(marker); // 将标注添加到地图中
+						marker.addEventListener("click", getAttr);
+						function getAttr() {
+							var p = marker.getPosition(); //获取marker的位置
+							p.id = "123";
+							console.log("点的位置是" + hotPoint.lng + ","
+									+ hotPoint.lat);
+							console.log("marker的位置是" + p.lng + "," + p.lat);
+						}
+					});
+					for (var i = 0; i < markers.length; i++) {
+						map.addOverlay(markers[i]); // 将标注添加到地图中
+					}
+				} else {
+					alert(data.message);
+				}
+			},
+			error : function(data) {
+				// view("异常！");
+				//alert("系统异常");
+			}
+		});
+	};
+
+/*
+	var compHash = [
+			{
+				areaId : "COM20120329000006",
+				areaName : "无锡大区",
+				compAddress : "台州市椒江区开发大道545号",
+				compCode : "COM20100211000017",
+				compCodeList : null,
+				compLatitude : "28.642517",
+				compLongitude : "121.435023",
+				compName : "NO.14 台州椒江店",
+				compTel : "0576-88210666    88210555",
+				compUrl : "http://www.harsons.cn/member/uploadfile/1/wangdian/img/995cb6e839.jpg"
+			},
+			{
+				areaId : "COM20120329000006",
+				areaName : "无锡大区",
+				compAddress : "常州市武进区长虹路888号(长虹高架长江路下即到)",
+				compCode : "COM20120904000001",
+				compCodeList : null,
+				compLatitude : "31.724369",
+				compLongitude : "119.926192",
+				compName : "NO.53 常州武进店",
+				compTel : "0519-69692777、69698777",
+				compUrl : "http://www.harsons.cn/member/uploadfile/1/wangdian/img/0819883137.jpg"
+			}
+		];
+*/
+		var compData = null;
+		getExandMapData();
+		function getExandMapData(){
+            $.ajax({
+        			//url : "com.saas.compdevelop.expand.tProjectReport.searchExandCompMap.biz.ext",
+        			url : "http://wechat.harsons.cn/api.php?m=ApiErp&s=getCity&sign=hrs2Nis_da32w45fba",//互联网中心 提供的接口
+        			type: 'get',
+	                async: false, //同步执行，返回成功后才能进行下面的操作
+	                success:function(text){
+	                compData = JSON.parse(text).data;
+	                },
+	                error : function(jqXHR, textStatus, errorThrown) {
+	                	//nui.alert(jqXHR.responseText);
+	                }
+	            });
+	          initPoint();
+		}
+
+
+
+
+
+
+		function initPoint() {
+
+			point = new BMap.Point("121.435023","28.642517");
+					//centerLatitude:"28.642517"
+                    //centerLongitude:"121.435023"
+			/* if (shopCode != null && shopCode != ''
+					&& areaId != 'shopCode') {
+				map.centerAndZoom(point, 13);
+			} else if (areaId != null && areaId != ''
+					&& areaId != 'null') {
+				map.centerAndZoom(point, 10);
+			} */
+			map.centerAndZoom(point, 13);
+
+			$.each(compData, function(index, item) {
+						/* var myIcon = new BMap.Icon("static/img/dizhi.png",
+								new BMap.Size(19,25));  */
+						var marker = new BMap.Marker(new BMap.Point(
+								item.longitude, item.latitude)); // 创建标注
+						var content = item.compName;
+						markers.push(marker);
+						//map.addOverlay(marker); // 将标注添加到地图中
+						var sContent =
+	"<h4 style='margin:0 0 5px 0;padding:0.2em 0'>"+item.compName+"</h4>" +
+	"<div class='media'>" +
+	"<img  class='pull-left' src='"+item.thumb+"' style='width:80px;height:80px;' title='"+item.compName+"'/>" +
+	"<div class='media-body'>"+
+	"<div class='media' style='width:200px'>地址："+item.address+"</div>" +
+	"<div class='media' style='width:200px'>电话："+item.tel+"</div>" +
+	"</div></div>";
+						addClickHandler(sContent, marker);
+
+					});
+					for (var i = 0; i < markers.length; i++) {
+						map.addOverlay(markers[i]); // 将标注添加到地图中
+					}
+
+		}
+
+	//加载门店经纬度信息
+	function addCompLatLng(areaId, shopCode) {
+		if (markers.length > 0) {
+			for (var i = 0; i < markers.length; i++) {
+				map.removeOverlay(markers[i]);
+			}
+			markers.length = 0;
+		}
+
+		if (areaId == null || areaId == '') {
+			point = new BMap.Point(114.31667, 30.51667);
+			map.centerAndZoom(point, 6);
+			return;
+		}
+
+
+
+		$.ajax({
+			type : "POST",
+			url : './portray/getCompLatLngList.json',
+			data : {
+				accessToken : accessToken,
+				areaId : areaId,
+				shopCode : shopCode
+			},
+			dataType : 'json',
+			cache : false,
+			//headers: headers,
+			success : function(data) {
+				if (data.status == "success") {
+					//加载数据
+					var json = data.data;
+					if (json.centerLongitude != null
+							&& json.centerLongitude != '') {
+						point = new BMap.Point("121.435023",
+								"28.642517");
+								//centerLatitude:"28.642517"
+                                //centerLongitude:"121.435023"
+						/* if (shopCode != null && shopCode != ''
+								&& areaId != 'shopCode') {
+							map.centerAndZoom(point, 13);
+						} else if (areaId != null && areaId != ''
+								&& areaId != 'null') {
+							map.centerAndZoom(point, 10);
+						} */
+						map.centerAndZoom(point, 13);
+					}
+
+					$.each(json.compLatLngList, function(index, item) {
+						/* var myIcon = new BMap.Icon("static/img/dizhi.png",
+								new BMap.Size(19,25));  */
+						var marker = new BMap.Marker(new BMap.Point(
+								item.compLongitude, item.compLatitude)); // 创建标注
+						var content = item.compName;
+						markers.push(marker);
+						//map.addOverlay(marker); // 将标注添加到地图中
+						var sContent =
+	"<h4 style='margin:0 0 5px 0;padding:0.2em 0'>"+item.compName+"</h4>" +
+	"<div class='media'>" +
+	"<img  class='pull-left' src='"+item.compUrl+"' style='width:80px;height:80px;' title='"+item.compName+"'/>" +
+	"<div class='media-body'>"+
+	"<div class='media' style='width:200px'>地址："+item.compAddress+"</div>" +
+	"<div class='media' style='width:200px'>电话："+item.compTel+"</div>" +
+	"</div></div>";
+						addClickHandler(sContent, marker);
+
+					});
+					for (var i = 0; i < markers.length; i++) {
+						map.addOverlay(markers[i]); // 将标注添加到地图中
+					}
+
+				} else {
+					alert(data.message);
+				}
+			},
+			error : function(data) {
+				// view("异常！");
+				//alert("系统异常");
+			}
+		});
+	};
+
+	function addClickHandler(content, marker) {
+		marker.addEventListener("click", function(e) {
+			openInfo(content, e)
+		});
+	};
+	function openInfo(content, e) {
+		var p = e.target;
+		var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
+		var infoWindow = new BMap.InfoWindow(content,opts); // 创建信息窗口对象
+		map.openInfoWindow(infoWindow, point); //开启信息窗口
+	};
+
+	//是否显示热力图
+	function openHeatmap() {
+		heatmapOverlay.show();
+	};
+	function closeHeatmap() {
+		heatmapOverlay.hide();
+	};
+
+	//判断浏览区是否支持canvas
+	function isSupportCanvas() {
+		var elem = document.createElement('canvas');
+		return !!(elem.getContext && elem.getContext('2d'));
+	};
+</script>

@@ -104,7 +104,16 @@ export default new Router({
                 path: '/bdbUserList',
                 component: () => import('./views/bdb/bdbUserList.vue'),
                 name: '用户列表'
-            }]
+            }, {
+                    path: '/companyMap',
+                    component: () => import('./views/bdb/companyMap.vue'),//companyMap.vue
+                name:'门店分布图'
+                },{
+                    path: "/firstPrice",
+                    component: () => import('./views/bdb/firstPrice.vue'),
+                    name:"报价管理"
+            }
+            ]
         },
         {
             path: '*',

@@ -3,11 +3,15 @@
     <div>
         <el-container  style="height:100%;width:100%">
             <el-header>
-
+                <el-input v-model="userName" placeholder="姓名" clearable style="width:150px;" ></el-input>
+                <el-input v-model="mobile" placeholder="手机号" clearable style="width:150px;" ></el-input>
+                <el-button icon="el-icon-search" @click="loadData">查询</el-button>
+                <el-button icon="el-icon-plus" @click="addRow">新增</el-button>
+                <el-button icon="el-icon-edit" @click="editRow">修改</el-button>
             </el-header>
             <el-main style="height:100%;width:100%;padding:0px">
             <el-table ref='table' :data='tableData' border highlight-current-row  :height="tableHeight" 
-                @selection-change='rowChange' @row-click="rowClick">
+                @selection-change='rowChange' @row-click="rowClick" v-loading="listLoading">
                 <el-table-column type="index" label="序号" header-align="center" width="80"></el-table-column>
                 <el-table-column property="areaName" label="区域名称" header-align="center" min-width="100" ></el-table-column>
                 <el-table-column property="compName" label="公司名称" header-align="center" min-width="100" ></el-table-column>
@@ -37,6 +41,9 @@ export default {
             tableData:[],
             token:localStorage.getItem('token'),
             tableHeight:window.innerHeight - 160 - 50,
+            userName:'',
+            mobile:'',
+            listLoading:false,
             
             currentPage: 0, //当前页
             pageSize: 20, //分页数
@@ -54,16 +61,25 @@ export default {
         loadData(){
             let params ={
                 token:this.token,
+                params:{
+                    userName:this.userName,
+                    mobile:this.mobile,
+                },
                 page:{
-                    begin:this.currentPage*this.pageSize+1,
+                    begin:this.currentPage*this.pageSize,
                     length:this.pageSize
                 }
             };
+            this.listLoading = true;
             bdbUserList(params).then(res =>{
                 this.tableData = res.data;
                 this.pageTotal = res.page.count;
-                this.currentPage = res.page.currentPage;
-            })
+                this.currentPage = res.page.currentPage-1;
+                this.listLoading = false;
+            }).catch(err => {
+                console.log(err);
+                this.listLoading = false;
+            });
         },
         rowChange(){
 
@@ -76,7 +92,7 @@ export default {
             this.loadData();
         },
         handleCurrentChange(val){
-            this.currentPage = val-1;
+            this.currentPage = val;
             this.loadData();
         },
         timeFormat: function(row, column) {
@@ -86,6 +102,12 @@ export default {
             }
             return val;
         },
+        addRow(){
+
+        },
+        editRow(){
+
+        }
     }
 };
 </script>

@@ -33,7 +33,7 @@
   </section>
 </template>
 <script>
-import { getUserList } from '../../api/api'
+import { getTestUserListByPage,getTestUserList }from '@/api/myApi'
 export default {
   data () {
     return {
@@ -55,8 +55,8 @@ export default {
         name: this.filters.name
       }
       this.loading = true
-      getUserList(para).then((res) => {
-        this.users = res.data.users
+      getTestUserList(para).then((res) => {
+        this.users = res.data
         this.loading = false
       })
     }
