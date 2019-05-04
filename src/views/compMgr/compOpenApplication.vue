@@ -170,7 +170,14 @@
             <el-row class="wlRowDiv">
                 <el-col :span="8" class="colHeight">
                     <el-form-item label="行政区域" prop="area">
-                        <el-input class="inputWidth" v-model="form.area"></el-input>
+                        <el-select class="inputWidth" v-model="form.area">
+                            <el-option
+                                v-for="item in areaList"
+                                :key="item.id"
+                                :value="item.areaName"
+                                :label="item.areaName"
+                            ></el-option>
+                        </el-select>
                     </el-form-item>
                 </el-col>
                 <el-col :span="8" class="colHeight">
@@ -194,7 +201,7 @@
                             <el-option
                                 v-for="item in isTrueList"
                                 :key="item.id"
-                                :value="item.text"
+                                :value="item.id"
                                 :label="item.text"
                             ></el-option>
                         </el-select>
@@ -206,7 +213,7 @@
                             <el-option
                                 v-for="item in isTrueList"
                                 :key="item.id"
-                                :value="item.text"
+                                :value="item.id"
                                 :label="item.text"
                             ></el-option>
                         </el-select>
@@ -260,11 +267,11 @@
             <el-row class="wlRowDiv">
                 <el-col :span="8" class="colHeight">
                     <el-form-item label="启用维修电子档案" prop="useElectronicRecords">
-                        <el-select class="inputWidth" v-model="form.useElectronicRecords">
+                        <el-select class="inputWidth" v-model="form.useElectronicRecords" value-key="id" @change="useChange($event)">
                             <el-option
                                 v-for="item in isTrueList"
                                 :key="item.id"
-                                :value="item.text"
+                                :value="item.id"
                                 :label="item.text"
                             ></el-option>
                         </el-select>
@@ -272,7 +279,7 @@
                 </el-col>
                 <el-col :span="8" class="colHeight">
                     <el-form-item label="道路运输许可证号" prop="roadTransportPermit">
-                        <el-input class="inputWidth" v-model="form.roadTransportPermit"></el-input>
+                        <el-input class="inputWidth" v-model="form.roadTransportPermit" :disabled="isRoad"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -286,7 +293,7 @@
 
 <script>
 import util from "@/common/js/util";
-import { queryAddress } from "@/api/bdbApi";
+import { queryAddress,getAreaList } from "@/api/bdbApi";
 const typeArr = [{ id: 1, text: "直营" }, { id: 0, text: "加盟" }];
 const levelArr = [
     { id: 0, text: "旗舰店" },
@@ -355,6 +362,7 @@ export default {
                 useOaProcess:[{required:true,trigger:'change',message:'请选择是否启用OA审批流程'}],
                 settleAccounts:[{required:true,trigger:'change',message:'请选择结算格式'}],
                 openDate:[{required:true,trigger:'change',message:'请选择营业时间'}],
+                roadTransportPermit:[],
             },
             provincesList: [], //省份列表
             cityList: [], //城市列表
@@ -363,7 +371,9 @@ export default {
             compLevelList: levelArr, //门店级别
             modelList: modelArr, //投资模式
             settleAccountsList: settlementArr, //结算格式
-            isTrueList: isTrueArr
+            isTrueList: isTrueArr,
+            areaList:[],
+            isRoad:true,//道路运输许可证 是否可填 false可填 true不可填
         };
     },
 
@@ -390,6 +400,22 @@ export default {
             queryAddress().then(res => {
                 this.provincesList = res.rs;
             });
+            getAreaList().then(res =>{
+                this.areaList = res.areaList;
+            })
+        },
+        useChange(val){
+            console.log(val);
+            const roadValid = [{required:true,trigger:'blur',message:'请输入道路运输许可证'}];
+            if(val == 1){
+                this.isRoad = false;
+                this.formRules.roadTransportPermit = roadValid;
+            }else{
+                this.isRoad = true;
+                this.formRules.roadTransportPermit = [];
+                this.form.roadTransportPermit = '';
+                this.$refs['form'].clearValidate(['roadTransportPermit']);//清除验证
+            }
         },
         onSubmit(formEl) {
             this.$refs[formEl].validate(valid => {

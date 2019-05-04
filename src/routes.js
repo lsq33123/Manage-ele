@@ -138,7 +138,7 @@ export default new Router({
             iconCls: 'fa fa-recycle',
             children: [{
                 path: "/selectDemo",
-                component: () => import('./views/test/selectDemo.vue'),
+                component: () => import('./views/test/selectDemoView.vue'),
                 name:'组件封装'
             }]
         },

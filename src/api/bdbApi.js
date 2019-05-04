@@ -18,6 +18,14 @@ export const queryCompArea  = p =>post(baseUrl + '/manage-ele/getCompGroupByArea
 //获取 省份 城市 地区
 export const queryAddress  = p =>post('com.hs.commons.region.getRegin.biz.ext',p);
 
+//获取 区域列表
+export const getAreaList  = p =>post('build/tzCompExpand/com.saas.commons.model.orgcomponent.getAreaByBI.biz.ext',p);
 
-
+//获取 区域列表
+const areaUrl = 'http://124.172.221.179/vapp/com.saas.commons.model.orgcomponent.getAreaByBI.biz.ext';
+//获取 门店列表
+const compUrl = 'http://124.172.221.179/vapp/com.saas.commons.model.orgcomponent.getUserCompGover.biz.ext';
+var vappToken = '?token='+'7f256042-338e-302f-97a4-55acc4e7be58';
+export const getVappArea  = p =>post(areaUrl+vappToken,p);
+export const getVappComp  = p =>post(compUrl+vappToken,p);
 

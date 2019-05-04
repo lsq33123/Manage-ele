@@ -2,11 +2,15 @@
     <section class="f-mainPage">
         <!--selectFunc 选择完成的回调      searchList 下拉列表的数据-->
         <search @selectFunc="selectFunc" :searchList="searchList" :selectValue="selectValue"></search>
+        <selectAreaComp @getValue="getValue" :compClear="true"></selectAreaComp>
+        <el-input style="width:150px;"></el-input>
+        {{showText}}
     </section>
 </template>
 
 <script type="text/ecmascript-6">
 import Search from '@/components/selectDemo';
+import selectAreaComp from '@/components/selectAreaComp'
   export default {
     data() {
       return {
@@ -16,22 +20,27 @@ import Search from '@/components/selectDemo';
           data: '1'
         },
         // 通过emit修改，规范写法
-        selectValue2: ''
+        selectValue2: '',
+        showText:'',
       }
     },
     mounted() {},
     methods: {
-      pageGo(path) {
-        this.$router.push('/' + path)
-      },
-      selectFunc(value) {
-        this.selectValue2 = value
-        console.log(this.selectValue)
-        console.log(this.selectValue2)
-      }
+        pageGo(path) {
+            this.$router.push('/' + path)
+        },
+        selectFunc(value) {
+            this.selectValue2 = value
+            console.log(this.selectValue)
+            console.log(this.selectValue2)
+        },
+        getValue(val){
+            this.showText = JSON.stringify(val);
+        }
     },
     components: {
-      Search
+      Search,
+      selectAreaComp
     }
   }
 </script>
