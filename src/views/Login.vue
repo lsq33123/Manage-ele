@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { getToken } from "@/api/myApi";
+import { getToken,getUserWorkInfo } from "@/api/myApi";
 export default {
     data() {
         return {
@@ -73,7 +73,7 @@ export default {
                                 var user = {
                                     account: this.ruleForm2.account,
                                     password: this.ruleForm2.checkPass,
-                                    avatar:'https://raw.githubusercontent.com/taylorchen709/markdown-images/master/vueadmin/user.png',
+                                    avatar:'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=404630985,2256487394&fm=26&gp=0.jpg',
                                     token: res.data
                                 };
                                 localStorage.setItem("token", res.data);
@@ -81,6 +81,9 @@ export default {
                                     "user",
                                     JSON.stringify(user)
                                 );
+                                getUserWorkInfo().then(res =>{
+                                    localStorage.setItem("atrr",JSON.stringify(res.atrr));
+                                })
                                 // 将登录名使用vuex传递到Home页面
                                 //this.$store.commit('handleUserName',_this.ruleForm2.account);
                                 //sessionStorage.setItem('user', JSON.stringify(user))

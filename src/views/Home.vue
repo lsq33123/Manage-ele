@@ -90,7 +90,7 @@
 export default {
   data () {
     return {
-      sysName: 'TEST',
+      sysName: 'SAAS',
       collapsed: false,
       sysUserName: '',
       sysUserAvatar: '',
@@ -157,9 +157,12 @@ export default {
   },
   mounted () {
     var user = localStorage.getItem('user')
-    if (user) {
+    var atrr = localStorage.getItem('atrr')
+
+    if (user && atrr) {
       user = JSON.parse(user)
-      this.sysUserName = user.account || ''
+      atrr = JSON.parse(atrr)
+      this.sysUserName = atrr.userName || ''
       this.sysUserAvatar = user.avatar || ''
     }
   }

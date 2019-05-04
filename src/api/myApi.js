@@ -26,6 +26,8 @@ export const isConceptUse = p => post('com.hs.manager.impl.Business.BusinessConc
 //http://tapi.hszb.harsons.cn/service/login
 //  获取token 验证
 export const getToken = p => post('http://tapi.hszb.harsons.cn/service/login', p);
+//  获取 用户信息
+export const getUserWorkInfo = p => post('com.saas.commons.model.orgcomponent.getSessionAttributes.biz.ext', p);
 
 //获取工作计划列表
 export const getPlanList = p => post('com.hs.plan.PerformanceAssessment.PA_List_Search_List.biz.ext', p);

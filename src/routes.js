@@ -75,14 +75,27 @@ export default new Router({
         {
             path: '/',
             component: () => import('./views/Home.vue'),
-            name: '',
+            name: '门店信息',
             iconCls: 'fa fa-address-card',
-            leaf: true,
+            //leaf: true,
             children: [{
-                path: '/page6',
-                component: () => import('./views/nav3/Page6.vue'),
-                name: '导航三'
-            }]
+                path: '/compView',
+                component: () => import('./views/compMgr/compView.vue'),
+                name: '门店概览'
+            },{
+                path: '/compMap',
+                component: () => import('./views/compMgr/compMap.vue'),
+                name: '门店分布'
+            },{
+                path: '/compOpenApplication',
+                component: () => import('./views/compMgr/compOpenApplication.vue'),
+                name: '门店开通申请'
+            },{
+                path: '/testMap',
+                component: () => import('./views/compMgr/testMap.vue'),
+                name: '地图测试'
+            }
+            ]
         },
         {
             path: '/',
@@ -112,8 +125,22 @@ export default new Router({
                     path: "/firstPrice",
                     component: () => import('./views/bdb/firstPrice.vue'),
                     name:"报价管理"
+                }, {
+                    path: '/carAccidentAnaylsis',
+                    component: () => import('./views/bdb/report/carAccidentAnaylsis.vue'),
+                    name:"事故推送修分析"
             }
             ]
+        }, {
+            path: '/',
+            component:()=>import('./views/Home.vue'),
+            name: '测试页面',
+            iconCls: 'fa fa-recycle',
+            children: [{
+                path: "/selectDemo",
+                component: () => import('./views/test/selectDemo.vue'),
+                name:'组件封装'
+            }]
         },
         {
             path: '*',
