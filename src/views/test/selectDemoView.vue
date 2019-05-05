@@ -2,8 +2,8 @@
     <section class="f-mainPage">
         <!--selectFunc 选择完成的回调      searchList 下拉列表的数据-->
         <search @selectFunc="selectFunc" :searchList="searchList" :selectValue="selectValue"></search>
-        <selectAreaComp @getValue="getValue" :compClear="true"></selectAreaComp>
-        <el-input style="width:150px;"></el-input>
+        <selectAreaComp @getValue="getValue" :areaClear="true" :compClear="true"></selectAreaComp>
+        <el-input style="width:150px;"></el-input><br/>
         {{showText}}
     </section>
 </template>

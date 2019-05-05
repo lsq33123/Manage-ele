@@ -1,4 +1,4 @@
-<!-- 连锁门店分布 -->
+<!-- 连锁拓店概况-->
 <template>
     <div >
         <div id="pieC" style="height:220px;width:97%;" title>
@@ -15,9 +15,9 @@
                     <div style="height: 20px;"></div>
                     <table border="0">
                         <tr style="height:60px;">
-                            <td class="trtitle" width="25%">直营</td>
-                            <td class="trtitle" width="25%">加盟</td>
-                            <td class="trtitle" width="25%"></td>
+                            <td class="trtitle" width="25%">开业</td>
+                            <td class="trtitle" width="25%">立项</td>
+                            <td class="trtitle" width="25%">签约</td>
                             <td class="trtitle" width="25%"></td>
                         </tr>
                         <tr style="height:10px;">
@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { getBySQL,queryCompProvince,queryCompArea } from "@/api/bdbApi";
+import { getCompTzNum,getCompTzByArea,getCompTzByPro } from "@/api/bdbApi";
 import echarts from "echarts";
 export default {
     data() {
@@ -64,6 +64,7 @@ export default {
             sCount: 0,//全部分店的数量
             onCountRate: 0,//直营店占比
             warnCountRate: 0,//加盟店占比
+            delayCountRate:0,
             bEchartShowType:0,//区别底部echart显示 0按区域 1按省份
             areaArr:[],//图表的x轴
             obranchCount :0,//旗舰店数量
@@ -84,40 +85,27 @@ export default {
 
     methods: {
         loadData() {
-            let params = {
-                p: {
-                    def: {
-                        ds: "WbSystem", //数据源
-                        url:
-                            "com.saas.compdevelop.exand.getExandData.getExandCompType", //命名SQL路径
-                        row2Cols: "COMPTYPE", //行转列转置列参数，多个用逗号隔开
-                        sumCols: "NUM",
-                        groupBy: "MANAGEMENT_DEPARTMENT", //行转列分组列参数，多个用逗号隔开
-                        page: false //是否分页，配合分页参数使用
-                    }
-                }
-            };
-            getBySQL(params)
+            getCompTzNum()
                 .then(res => {
                     if (res.result) {
                         let sum = res.result[0];
-                        this.onCount = sum["1_NUM"] || 0;
-                        this.warnCount = sum["2_NUM"] || 0;
-                        this.sCount = this.onCount + this.warnCount;
-                        let tit = `&nbsp;&nbsp;华胜连锁分店<font size='6px' color='#40A9FF'>${
+                        this.onCount = sum["3_NUM"] || 0;
+                        this.warnCount = sum["4_NUM"] || 0;
+                        this.delayCount = sum["5_NUM"] || 0;
+
+                        this.sCount = this.onCount + this.warnCount + this.delayCount;
+                        let tit = `&nbsp;&nbsp;门店拓展<font size='6px' color='#40A9FF'>${
                             this.sCount
                         }</font>家`;
                         document.getElementById("tle").innerHTML = tit;
                         if (this.sCount > 0) {
-                            this.onCountRate = Math.round(
-                                (this.onCount / this.sCount) * 100
-                            );
-                            this.warnCountRate = Math.round(
-                                (this.warnCount / this.sCount) * 100
-                            );
+                            this.onCountRate = Math.round((this.onCount / this.sCount) * 100);
+                            this.warnCountRate = Math.round((this.warnCount / this.sCount) * 100);
+                            this.delayCountRate = Math.round((this.delayCount / this.sCount) * 100);
                         } else {
                             this.onCountRate = 0;
                             this.warnCountRate = 0;
+                            this.delayCountRate = 0;
                         }
                         document.getElementById("unfinishcount").innerHTML =
                             "<font size='10px' face='微软雅黑 ' color='#40A9FF' >" +
@@ -126,6 +114,10 @@ export default {
                         document.getElementById("delaycount").innerHTML =
                             "<font size='10px' face='微软雅黑 '  color='#5DD4D0'  >" +
                             this.warnCount +
+                            "</font>";
+                        document.getElementById("finishcount").innerHTML =
+                            "<font size='10px' face='微软雅黑 '  color='#de97c4'  >" +
+                            this.delayCount +
                             "</font>";
                         this.loadTopEchart();
                     }
@@ -155,7 +147,7 @@ export default {
                     orient: "vertical",
                     x: "left",
                     y: "center",
-                    data: ["直营", "加盟"],
+                    data: ['立项','签约','开业'],
                     show: false
                 },
                 calculable: true,
@@ -168,7 +160,7 @@ export default {
                         data: [
                             {
                                 value: this.warnCount,
-                                name: "加盟",
+                                name: "立项",
                                 itemStyle: {
                                     normal: {
                                         color: "#5DD4D0"
@@ -176,8 +168,17 @@ export default {
                                 }
                             },
                             {
+                                value: this.delayCount,
+                                name: "签约",
+                                itemStyle: {
+                                    normal: {
+                                        color: "#de97c4"
+                                    }
+                                }
+                            },
+                            {
                                 value: this.onCount,
-                                name: "直营",
+                                name: "开业",
                                 itemStyle: {
                                     normal: {
                                         color: "#40A9FF"
@@ -193,7 +194,7 @@ export default {
         loadBottomData(){
             //queryCompProvince,queryCompArea 
             if(this.bEchartShowType == 0){
-                queryCompArea().then(res =>{
+                getCompTzByArea().then(res =>{
                 this.areaArr = res.areaArr;
                 this.obranchCount = res.obranchCount;
                 this.tbranchCount = res.tbranchCount;
@@ -202,7 +203,7 @@ export default {
                 this.loadBottomEchart();
                 });
             }else{
-                queryCompProvince().then(res =>{
+                getCompTzByPro().then(res =>{
                 this.areaArr = res.areaArr;
                 this.obranchCount = res.obranchCount;
                 this.tbranchCount = res.tbranchCount;

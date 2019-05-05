@@ -26,8 +26,8 @@
                     </el-form-item>
                 </el-col>
                 <el-col :span="8" class="colHeight">
-                    <el-form-item label="申请日期" prop="creator">
-                        <el-input class="inputWidth" v-model="form.creator" :disabled="true"></el-input>
+                    <el-form-item label="申请日期" prop="createDate">
+                        <el-input class="inputWidth" v-model="form.createDate" :disabled="true"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>

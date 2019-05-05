@@ -20,7 +20,7 @@ export default new Router({
             path: '/',
             component: () => import('./views/Home.vue'),
             name: '导航一',
-            iconCls: 'el-icon-message', // 图标样式class
+            iconCls: 'fa fa-vimeo-square', // 图标样式class
             children: [{
                     path: '/main',
                     component: () => import('./views/Main.vue'),
@@ -48,7 +48,7 @@ export default new Router({
             path: '/',
             component: () => import('./views/Home.vue'),
             name: '设计',
-            iconCls: 'el-icon-message', // 图标样式class
+            iconCls: 'fa fa-map-o', // 图标样式class
             children: [{
                 path: '/business',
                 component: () => import('./views/myself/business/business.vue'),
@@ -76,7 +76,7 @@ export default new Router({
             path: '/',
             component: () => import('./views/Home.vue'),
             name: '门店信息',
-            iconCls: 'fa fa-address-card',
+            iconCls: 'fa fa-institution',
             //leaf: true,
             children: [{
                 path: '/compView',
@@ -86,6 +86,14 @@ export default new Router({
                 path: '/compMap',
                 component: () => import('./views/compMgr/compMap.vue'),
                 name: '门店分布'
+            },{
+                path: '/compTzDetail',
+                component: () => import('./views/compMgr/compTzDetail.vue'),
+                name: '门店拓展'
+            },{
+                path: '/compWorkshop',
+                component: () => import('./views/compMgr/compWorkshop.vue'),
+                name: '门店车间及工位'
             },{
                 path: '/compOpenApplication',
                 component: () => import('./views/compMgr/compOpenApplication.vue'),
@@ -112,7 +120,7 @@ export default new Router({
             path: '/',
             component: () => import('./views/Home.vue'),
             name: 'Bing Bing Bing',
-            iconCls: 'fa fa-vimeo-square',
+            iconCls: 'fa fa-bell-o',
             children: [{
                 path: '/bdbUserList',
                 component: () => import('./views/bdb/bdbUserList.vue'),
