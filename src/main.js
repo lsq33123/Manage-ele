@@ -7,9 +7,14 @@ import 'font-awesome/css/font-awesome.min.css'
 import store from './vuex/store'
 import Vuex from 'vuex'
 // import Mock from './mock'
+
+import VueElementExtends from 'vue-element-extends'
+import 'vue-element-extends/lib/index.css'
 // Mock.bootstrap()
 Vue.use(ElementUI)
 Vue.use(Vuex)
+Vue.use(VueElementExtends)
+
 router.beforeEach((to, from, next) => {
     if (to.path === '/login') {
         localStorage.removeItem('user');

@@ -41,7 +41,7 @@
             <div class="btnSty">
                 <el-button size="small" @click="chnageType(0)">按区域分组</el-button>
                 <el-button size="small" @click="chnageType(1)">按省份分组</el-button>
-                <el-button size="small">查看地图分布</el-button>
+                <el-button size="small" @click="toMap()">查看地图分布</el-button>
             </div>    
             <div id="main" name="main" style="height:100%;width:100%;min-height:370px;" title="建店区域分布图"> </div>
         </div>
@@ -299,6 +299,9 @@ export default {
         chnageType(e){
             this.bEchartShowType = e;
             this.loadBottomData();
+        },
+        toMap(){
+            this.$router.push({path:'/compMap'});
         }
 
     }

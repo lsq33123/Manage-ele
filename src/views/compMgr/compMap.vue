@@ -1,36 +1,133 @@
 <template>
-<baidu-map class="map" center="中国" ak="tO2SsUpep6SNN9aiNKzGiBI8">
-  <bml-marker-clusterer :averageCenter="true">
-    <bm-marker v-for="marker of markers" :key="marker.id" :position="{lng: marker.lng, lat: marker.lat}"></bm-marker>
-  </bml-marker-clusterer>
-</baidu-map>
+    <baidu-map
+        id="container"
+        class="map"
+        center="郑州"
+        ak="tO2SsUpep6SNN9aiNKzGiBI8"
+        :zoom="5"
+        :scroll-wheel-zoom="true"
+    >
+        <bml-marker-clusterer :averageCenter="true">
+            <bm-marker
+                v-for="marker of markers"
+                :key="marker.compCode"
+                :position="{lng: marker.longitude, lat: marker.latitude}"
+                @click="clickHandler(marker.compCode)"
+            ></bm-marker>
+            <bm-info-window
+                :position="{lng: currPoint.longitude, lat: currPoint.latitude}"
+                :width="300" :height="120"
+                :show="isShowInfoWin"
+            >
+                <!-- <p v-text="JSON.stringify(currPoint)"></p> -->
+                <h4 style="margin:0 0 5px 0;padding:0.2em 0">{{currPoint.compName}}</h4>
+                <div class="media">
+                    <img
+                        class="pull-left"
+                        :src="currPoint.thumb"
+                        style="width:80px;height:80px;"
+                        :title="currPoint.compName"
+                    >
+                    <div class="media-body">
+                        <div class="media" style="width:210px">地址：{{currPoint.address}}</div>
+                        <div class="media" style="width:210px">电话：{{currPoint.tel}}</div>
+                    </div>
+                </div>
+            </bm-info-window>
+        </bml-marker-clusterer>
+    </baidu-map>
 </template>
 
 <script>
-import BaiduMap from 'vue-baidu-map/components/map/Map.vue'
-import {BmlMarkerClusterer,bmMarker} from 'vue-baidu-map'
+import BaiduMap from "vue-baidu-map/components/map/Map.vue";
+import BmMarker from "vue-baidu-map/components/overlays/Marker.vue";
+import BmInfoWindow from "vue-baidu-map/components/overlays/InfoWindow.vue";
+import BmlMarkerClusterer from "vue-baidu-map/components/extra/MarkerClusterer.vue";
+import { getCompAddressInfo } from "@/api/bdbApi";
 export default {
-  data () {
-    // 插入 10 个随机点
-    // const markers = []
-    // for (let i = 0; i < 10; i++) {
-    //   const position = {lng: Math.random() * 40 + 85, lat: Math.random() * 30 + 21}
-    //   this.markers.push(position)
-    // }
-    return {
-      markers:[{id:1,lng:123.0,lat:23.0},{id:2,lng:103.0,lat:55.0},{id:3,lng:143.0,lat:33.0}]
+    data() {
+        return {
+            markers: [],
+            isShowInfoWin: false,
+            currPoint: {
+                compCode: "",
+                compName: "",
+                province: "",
+                city: "",
+                longitude: "",
+                latitude: "",
+                thumb: "", //图标地址
+                address: "",
+                tel: ""
+            }
+        };
+    },
+    components: {
+        BaiduMap,
+        BmlMarkerClusterer,
+        BmMarker,
+        BmInfoWindow
+    },
+    created() {
+        this.loadData();
+    },
+    methods: {
+        loadData() {
+            getCompAddressInfo().then(res => {
+                this.markers = res.data;
+            });
+        },
+        clickHandler(compCode) {
+            //this.currPoint.longitude = e.point.lng;
+            //this.currPoint.latitude = e.point.lat;
+            const comp = this.markers.find(item =>item.compCode==compCode);
+            this.currPoint = comp;
+            this.isShowInfoWin = true;
+        }
     }
-  },
-  components: {
-    BaiduMap,
-    BmlMarkerClusterer,
-    bmMarker
-  }
-}
+};
 </script>
 <style scoped>
-.map{
-  width: 100%;
-  height: 550px;
+.map {
+    width: 100%;
+    height: 550px;
+}
+
+.pull-left {
+	float: left
+}
+.media, .media-body {
+	overflow: hidden;
+	*overflow: visible;
+	zoom: 1
+}
+
+.media, .media .media {
+	margin-top: 15px
+}
+
+.media:first-child {
+	margin-top: 0
+}
+
+.media-object {
+	display: block
+}
+
+.media-heading {
+	margin: 0 0 5px
+}
+
+.media>.pull-left {
+	margin-right: 10px
+}
+
+.media>.pull-right {
+	margin-left: 10px
+}
+
+.media-list {
+	margin-left: 0;
+	list-style: none
 }
 </style>

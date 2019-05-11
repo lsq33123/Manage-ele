@@ -19,6 +19,9 @@ export const queryCompArea  = p =>post(easyUrl + '/comp/getCompGroupByArea',p);
 //export const queryCompArea  = p =>post('com.saas.compdevelop.expand.tProjectReport.QueryExandCompType.biz.ext',p);
 //获取 省份 城市 地区
 export const queryAddress  = p =>post('com.hs.commons.region.getRegin.biz.ext',p);
+//获取 门店地理位置分布坐标
+//export const getCompAddressInfo  = p =>get('http://wechat.harsons.cn/api.php?m=ApiErp&s=getCity&sign=hrs2Nis_da32w45fba',p);
+export const getCompAddressInfo = p => post(easyUrl + '/comp/getCompAddressInfo', p);
 
 //获取 区域列表
 export const getAreaList  = p =>post('build/tzCompExpand/com.saas.commons.model.orgcomponent.getAreaByBI.biz.ext',p);
@@ -27,7 +30,7 @@ export const getAreaList  = p =>post('build/tzCompExpand/com.saas.commons.model.
 const areaUrl = 'http://124.172.221.179/vapp/com.saas.commons.model.orgcomponent.getAreaByBI.biz.ext';
 //获取 门店列表
 const compUrl = 'http://124.172.221.179/vapp/com.saas.commons.model.orgcomponent.getUserCompGover.biz.ext';
-var vappToken = '?token='+'5bd6488e-b998-3edf-8aa8-61bbf2b3271a';
+var vappToken = '?token='+'c1c2d704-68bd-350f-bd35-7f9e421575aa';
 export const getVappArea = p => post(areaUrl + vappToken,p);
 export const getVappComp = p => post(compUrl + vappToken, p);
 
@@ -43,4 +46,10 @@ export const getCompWorkShop = p => post('com.saas.compdevelop.expand.workShopEf
 
 
 //=====================渠道管理===================================
+//获取 公共接口 （运营检核模板）
+const sCheckModelUrl = 'http://124.172.221.179/vapp/com.hs.commons.unify.intfc.biz.ext';
+//export const getIntfc = p => post(sCheckModelUrl + vappToken, p);
+export const getIntfc = p => post('com.hs.commons.unify.intfc.biz.ext', p);
 
+//获取 保存（运营检核模板）
+export const getMenuSave = p => post('com.hsweb.management.OperatingCheck.getMenuSave.biz.ext', p);

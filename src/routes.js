@@ -53,6 +53,10 @@ export default new Router({
                 path: '/business',
                 component: () => import('./views/myself/business/business.vue'),
                 name: '商务概念'
+            },{
+                path: '/serviceCheckModel',
+                component: () => import('./views/myself/business/serviceCheckModel.vue'),
+                name: '运营检核模板'
             }]
         },
         {
