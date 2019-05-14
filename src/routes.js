@@ -19,28 +19,14 @@ export default new Router({
         {
             path: '/',
             component: () => import('./views/Home.vue'),
-            name: '导航一',
+            name: '主页',
             iconCls: 'fa fa-vimeo-square', // 图标样式class
+            leaf: true,
             children: [{
                     path: '/main',
                     component: () => import('./views/Main.vue'),
                     name: '主页',
-                    hidden: true
-                },
-                {
-                    path: '/table',
-                    component: () => import('./views/nav1/Table.vue'),
-                    name: 'Table'
-                },
-                {
-                    path: '/form',
-                    component: () => import('./views/nav1/Form.vue'),
-                    name: 'Form'
-                },
-                {
-                    path: '/user',
-                    component: () => import('./views/nav1/user.vue'),
-                    name: '列表'
+                    //hidden: true
                 }
             ]
         },
@@ -62,23 +48,6 @@ export default new Router({
         {
             path: '/',
             component: () => import('./views/Home.vue'),
-            name: '导航二',
-            iconCls: 'fa fa-id-card-o',
-            children: [{
-                    path: '/page4',
-                    component: () => import('./views/nav2/Page4.vue'),
-                    name: '页面4'
-                },
-                {
-                    path: '/page5',
-                    component: () => import('./views/nav2/Page5.vue'),
-                    name: '页面5'
-                }
-            ]
-        },
-        {
-            path: '/',
-            component: () => import('./views/Home.vue'),
             name: '门店信息',
             iconCls: 'fa fa-institution',
             //leaf: true,
@@ -93,7 +62,11 @@ export default new Router({
             },{
                 path: '/compTzDetail',
                 component: () => import('./views/compMgr/compTzDetail.vue'),
-                name: '门店拓展'
+                name: '门店拓展概览'
+            },{
+                path: '/compTzPace',
+                component: () => import('./views/compMgr/compTzPace.vue'),
+                name: '门店拓展进度'
             },{
                 path: '/compWorkshop',
                 component: () => import('./views/compMgr/compWorkshop.vue'),
@@ -108,17 +81,6 @@ export default new Router({
                 name: '地图测试'
             }
             ]
-        },
-        {
-            path: '/',
-            component: () => import('./views/Home.vue'),
-            name: 'Charts',
-            iconCls: 'fa fa-bar-chart',
-            children: [{
-                path: '/echarts',
-                component: () => import('./views/charts/echarts.vue'),
-                name: 'echarts'
-            }]
         },
         {
             path: '/',
@@ -143,7 +105,46 @@ export default new Router({
                     name:"事故推送修分析"
             }
             ]
-        }, {
+        },
+        {
+            path: '/',
+            component: () => import('./views/Home.vue'),
+            name: '导航二',
+            iconCls: 'fa fa-id-card-o',
+            children: [{
+                    path: '/page4',
+                    component: () => import('./views/nav2/Page4.vue'),
+                    name: '页面4'
+                },
+                {
+                    path: '/table',
+                    component: () => import('./views/nav1/Table.vue'),
+                    name: 'Table'
+                },
+                {
+                    path: '/form',
+                    component: () => import('./views/nav1/Form.vue'),
+                    name: 'Form'
+                },
+                {
+                    path: '/user',
+                    component: () => import('./views/nav1/user.vue'),
+                    name: '列表'
+                }
+            ]
+        },
+        {
+            path: '/',
+            component: () => import('./views/Home.vue'),
+            name: 'Charts',
+            iconCls: 'fa fa-bar-chart',
+            children: [{
+                path: '/echarts',
+                component: () => import('./views/charts/echarts.vue'),
+                name: 'echarts'
+            }]
+        },
+        {
             path: '/',
             component:()=>import('./views/Home.vue'),
             name: '测试页面',

@@ -26,6 +26,7 @@ export default {
               mapTypes: [BMAP_NORMAL_MAP, BMAP_HYBRID_MAP]
             })
           )
+          //this.myMap.addControl(navigationControl);//定位 
           this.myMap.setCurrentCity('广州') // 设置地图显示的城市 此项是必须设置的
           this.myMap.enableScrollWheelZoom(true) //开启鼠标滚轮缩放
         })
@@ -39,6 +40,14 @@ export default {
 <style scoped>
 .map-area {
   width: 100%;
-  height: 550px;
+  height: 570px;
+}
+/* 隐藏左下角logo  但是没起作用 */
+.BMap_cpyCtrl {
+    display: none;
+}
+
+.anchorBL {
+    display: none;
 }
 </style>

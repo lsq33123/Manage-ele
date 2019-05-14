@@ -22,7 +22,7 @@
 
 <script>
 import echarts from 'echarts'
-
+import  'echarts/theme/macarons.js'
 export default {
   data () {
     return {
@@ -35,7 +35,7 @@ export default {
 
   methods: {
     drawColumnChart () {
-      this.chartColumn = echarts.init(document.getElementById('chartColumn'))
+      this.chartColumn = echarts.init(document.getElementById('chartColumn'),'macarons')
       this.chartColumn.setOption({
         title: { text: 'Column Chart' },
         tooltip: {},
@@ -51,7 +51,7 @@ export default {
       })
     },
     drawBarChart () {
-      this.chartBar = echarts.init(document.getElementById('chartBar'))
+      this.chartBar = echarts.init(document.getElementById('chartBar'),'macarons')
       this.chartBar.setOption({
         title: {
           text: 'Bar Chart',
@@ -95,7 +95,7 @@ export default {
       })
     },
     drawLineChart () {
-      this.chartLine = echarts.init(document.getElementById('chartLine'))
+      this.chartLine = echarts.init(document.getElementById('chartLine'),'macarons')
       this.chartLine.setOption({
         title: {
           text: 'Line Chart'
@@ -143,7 +143,7 @@ export default {
       })
     },
     drawPieChart () {
-      this.chartPie = echarts.init(document.getElementById('chartPie'))
+      this.chartPie = echarts.init(document.getElementById('chartPie'),'macarons')
       this.chartPie.setOption({
         title: {
           text: 'Pie Chart',

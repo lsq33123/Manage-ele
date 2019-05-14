@@ -90,7 +90,8 @@ export default {
 <style scoped>
 .map {
     width: 100%;
-    height: 550px;
+    height: 570px;
+    
 }
 
 .pull-left {
@@ -129,5 +130,12 @@ export default {
 .media-list {
 	margin-left: 0;
 	list-style: none
+}
+/* 隐藏左下角logo  但是没起作用 */
+.BMap_cpyCtrl {
+    display: none !important;
+}
+.anchorBL {
+    display: none !important;
 }
 </style>

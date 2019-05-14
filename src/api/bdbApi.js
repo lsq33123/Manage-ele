@@ -30,7 +30,7 @@ export const getAreaList  = p =>post('build/tzCompExpand/com.saas.commons.model.
 const areaUrl = 'http://124.172.221.179/vapp/com.saas.commons.model.orgcomponent.getAreaByBI.biz.ext';
 //获取 门店列表
 const compUrl = 'http://124.172.221.179/vapp/com.saas.commons.model.orgcomponent.getUserCompGover.biz.ext';
-var vappToken = '?token='+'c1c2d704-68bd-350f-bd35-7f9e421575aa';
+var vappToken = '?token='+'45ab118c-9c2d-3fc9-bb03-dece99906f1a';
 export const getVappArea = p => post(areaUrl + vappToken,p);
 export const getVappComp = p => post(compUrl + vappToken, p);
 
@@ -43,7 +43,10 @@ export const getCompTzByPro = p => post(easyUrl + '/comp/getCompTzByPro',p)
 
 //获取 分店面积及车间工位数
 export const getCompWorkShop = p => post('com.saas.compdevelop.expand.workShopEfficacyExpand.searchData.biz.ext',p)
-
+//获取 门店拓展进度列表
+//export const getCompFollowList = p => post('com.saas.compdevelop.expand.tProjectReport.Follow.biz.ext',p)
+const followUrl = 'http://124.172.221.179/vapp/com.saas.compdevelop.expand.tProjectReport.Follow.biz.ext';
+export const getCompFollowList = p => post(followUrl + vappToken, p);
 
 //=====================渠道管理===================================
 //获取 公共接口 （运营检核模板）

@@ -51,6 +51,7 @@
 <script>
 import { getBySQL,queryCompProvince,queryCompArea } from "@/api/bdbApi";
 import echarts from "echarts";
+import  'echarts/theme/macarons.js'
 export default {
     data() {
         return {
@@ -213,16 +214,16 @@ export default {
             }
         },
         loadBottomEchart(){
-            const myChart = echarts.init(document.getElementById('main'));
+            const myChart = echarts.init(document.getElementById('main'),'macarons');
             let rot = 0;//倾斜角度
             if(this.areaArr.length > 10){
                 rot = -30;
             }
             const itemStyle = {
                 normal: {
-                    color: [
-                    '#ff7f50','#87cefa','#da70d6','#32cd32'
-                    ]
+                    // color: [
+                    // '#ff7f50','#87cefa','#da70d6','#32cd32'
+                    // ]
                 }
             }
 
@@ -232,7 +233,7 @@ export default {
                     subtext: '',
                     x: 'center'
                 },
-                color: ['#3398DB', '#ff7f50','#da70d6','#32cd32'],
+                //color: ['#3398DB', '#ff7f50','#da70d6','#32cd32'],
                 tooltip: {
                     trigger: 'axis',
                     axisPointer: {            // 坐标轴指示器，坐标轴触发有效
