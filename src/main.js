@@ -6,6 +6,7 @@ import router from './routes'
 import 'font-awesome/css/font-awesome.min.css'
 import store from './vuex/store'
 import Vuex from 'vuex'
+//import '@/common/js/directives.js'//实现对话框拖拽   使用 el-dialog 的地方加入 v-dialogDrag
 // import Mock from './mock'
 
 import VueElementExtends from 'vue-element-extends'

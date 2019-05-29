@@ -44,9 +44,9 @@ export const getCompTzByPro = p => post(easyUrl + '/comp/getCompTzByPro',p)
 //获取 分店面积及车间工位数
 export const getCompWorkShop = p => post('com.saas.compdevelop.expand.workShopEfficacyExpand.searchData.biz.ext',p)
 //获取 门店拓展进度列表
-//export const getCompFollowList = p => post('com.saas.compdevelop.expand.tProjectReport.Follow.biz.ext',p)
+export const getCompFollowList = p => post('com.saas.compdevelop.expand.tProjectReport.Follow.biz.ext',p)
 const followUrl = 'http://124.172.221.179/vapp/com.saas.compdevelop.expand.tProjectReport.Follow.biz.ext';
-export const getCompFollowList = p => post(followUrl + vappToken, p);
+//export const getCompFollowList = p => post(followUrl + vappToken, p);
 
 //=====================渠道管理===================================
 //获取 公共接口 （运营检核模板）

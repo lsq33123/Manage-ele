@@ -5,6 +5,10 @@ import { get, post } from '@/api/myHttp';
 
 var easyMockUrl = 'https://easy-mock.com/mock/5cb07ee7feb02568367811ed/manage-ele';
 
+// 获取 获取名字明细  不分页
+export const getNameDetail = p => post(easyMockUrl+'/others/getNameDetail', p);
+// 获取 获取名字五行  不分页
+export const getNameMain = p => post(easyMockUrl+'/others/getNameMain', p);
 // 获取 用户列表  不分页
 export const getTestUserList = p => post(easyMockUrl+'/userList', p);
 
@@ -20,7 +24,7 @@ export const getConceptGridData = p => post('com.hs.manager.impl.Business.Busine
 // 保存 商务概念 form 接口
 export const saveConceptForm = p => post('com.hs.manager.impl.Business.BusinessConcept_edit.biz.ext', p);
 
-//  商务概念启用/禁用
+//  商务概念启用/禁用 
 export const isConceptUse = p => post('com.hs.manager.impl.Business.BusinessConcept_status.biz.ext', p);
 
 //http://tapi.hszb.harsons.cn/service/login

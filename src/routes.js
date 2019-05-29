@@ -19,12 +19,13 @@ export default new Router({
         {
             path: '/',
             component: () => import('./views/Home.vue'),
-            name: '主页',
+            name: '',
             iconCls: 'fa fa-vimeo-square', // 图标样式class
             leaf: true,
             children: [{
                     path: '/main',
-                    component: () => import('./views/Main.vue'),
+                    //component: () => import('./views/Main.vue'),
+                    component: () => import('./views/charts/echarts.vue'),
                     name: '主页',
                     //hidden: true
                 }
@@ -33,24 +34,9 @@ export default new Router({
         {
             path: '/',
             component: () => import('./views/Home.vue'),
-            name: '设计',
-            iconCls: 'fa fa-map-o', // 图标样式class
-            children: [{
-                path: '/business',
-                component: () => import('./views/myself/business/business.vue'),
-                name: '商务概念'
-            },{
-                path: '/serviceCheckModel',
-                component: () => import('./views/myself/business/serviceCheckModel.vue'),
-                name: '运营检核模板'
-            }]
-        },
-        {
-            path: '/',
-            component: () => import('./views/Home.vue'),
             name: '门店信息',
             iconCls: 'fa fa-institution',
-            //leaf: true,
+            //leaf: true,//只有一个节点
             children: [{
                 path: '/compView',
                 component: () => import('./views/compMgr/compView.vue'),
@@ -81,6 +67,21 @@ export default new Router({
                 name: '地图测试'
             }
             ]
+        },
+        {
+            path: '/',
+            component: () => import('./views/Home.vue'),
+            name: '设计',
+            iconCls: 'fa fa-map-o', // 图标样式class
+            children: [{
+                path: '/business',
+                component: () => import('./views/myself/business/business.vue'),
+                name: '商务概念'
+            },{
+                path: '/serviceCheckModel',
+                component: () => import('./views/myself/business/serviceCheckModel.vue'),
+                name: '运营检核模板'
+            }]
         },
         {
             path: '/',
@@ -130,6 +131,11 @@ export default new Router({
                     path: '/user',
                     component: () => import('./views/nav1/user.vue'),
                     name: '列表'
+                },
+                {
+                    path: '/show',
+                    component: () => import('./views/nav1/show.vue'),
+                    name: '显示'
                 }
             ]
         },

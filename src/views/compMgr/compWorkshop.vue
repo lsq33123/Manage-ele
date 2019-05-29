@@ -71,7 +71,7 @@
                 :total="pagetotal"
             ></el-pagination>
         </div>
-        <el-dialog :title="dialogTitle" :visible.sync="dialogTableVisible" top="10vh">
+        <el-dialog :title="dialogTitle" :visible.sync="dialogTableVisible" top="10vh" v-dialogDrag>
             <el-form ref="form" :model="form"  :rules="formRule" size="small" label-width="120px">
                 <el-tabs type="card">
                     <el-tab-pane label="基本信息">
@@ -261,6 +261,7 @@
 <script>
 import { getCompWorkShop } from "@/api/bdbApi";
 import selectAreaComp from "@/components/selectAreaComp";
+import '@/common/js/directives.js'//实现对话框el-dialog 拖拽
 const clevel = [
     { id: "01070102", text: "旗舰店" },
     { id: "01070103", text: "标准店" },

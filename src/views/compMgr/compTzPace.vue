@@ -5,21 +5,21 @@
         <el-col :span="24" class="toolbar" style="padding-bottom: 0px;">
             <el-form :inline="true">
                 <el-form-item >
-                    <el-select  placeholder="省份" v-model="form.province" clearable :size="inputSize" style="width:100px;">
+                    <el-select  placeholder="省份" v-model="form.province" clearable @change="provinceChange"  :size="inputSize" style="width:100px;">
                         <el-option v-for="item in provinceList" :key="item.code" :value="item.name" :label="item.name"></el-option>
                     </el-select>&nbsp;
                     <el-select  placeholder="城市" v-model="form.city" clearable :size="inputSize" style="width:100px;">
                         <el-option v-for="item in cityList" :key="item.code" :value="item.name" :label="item.name"></el-option>
                     </el-select>&nbsp;
-                    <el-select  placeholder="运营管理部门" v-model="form.mgrDepartment" clearable :size="inputSize" style="width:130px;">
+                    <!-- <el-select  placeholder="运营管理部门" v-model="form.mgrDepartment" clearable :size="inputSize" style="width:130px;">
                         <el-option v-for="item in areaList" :key="item.areaCode" :value="item.areaName" :label="item.areaName"></el-option>
-                    </el-select>&nbsp;
-                    <el-select  placeholder="跟进人" clearable :size="inputSize" style="width:100px;">
+                    </el-select>&nbsp; -->
+                    <el-select  placeholder="跟进人" v-model="form.follower" clearable :size="inputSize" style="width:100px;">
                         <el-option v-for="item in followerList" :key="item.id" :value="item.text" :label="item.text"></el-option>
                     </el-select>&nbsp;
-                    <el-select  placeholder="进度" clearable :size="inputSize" style="width:100px;">
-                        <el-option v-for="item in processStatusList" :key="item.id" :value="item.text" :label="item.text"></el-option>
-                    </el-select>&nbsp;
+                    <el-select  placeholder="进度" v-model="form.progress" clearable :size="inputSize" style="width:100px;">
+                        <el-option v-for="item in progressList" :key="item.id" :value="item.id" :label="item.text"></el-option>
+                    </el-select>&nbsp; 
                     <el-input-number placeholder="年份" v-model="form.year" controls-position="right" :min='1990' :max='2050' :size="inputSize" @change="yearChange" style="width:100px;"></el-input-number>&nbsp;
                     <el-input-number placeholder="月份" v-model="form.month" controls-position="right" :min='1' :max='12' :size="inputSize" @change="monthChange" style="width:100px;"></el-input-number>&nbsp;
                     <el-button type="primary" size="mini" @click="loadData()">查询</el-button>
@@ -93,6 +93,7 @@ export default {
             cityList:[],
             areaList:[],
             processStatusList:processStatusArr,
+            progressList:progressArr,
             followerList:followerArr,
             inputSize:'small',
             form:{
@@ -100,6 +101,7 @@ export default {
                 city : '',
                 mgrDepartment:'',//运营管理部门
                 follower:'',//跟进人
+                progress:'',//进度
                 year:'',
                 month:'',
 
@@ -132,8 +134,9 @@ export default {
             let params = {
                 province:this.form.province,
 				city : this.form.city,
-				managementDepartment : this.mgrDepartment,
-				follower : this.follower,
+				managementDepartment : this.form.mgrDepartment,
+                follower : this.form.follower,
+                progress: this.form.progress,
                 year:this.form.year,
                 month:this.form.month,
                 //pageIndex: this.currentPage -1,
@@ -182,6 +185,18 @@ export default {
                 return util.formatDate.format(new Date(row.approvalDate), 'yyyy-MM-dd')
             }
             return;
+        },
+        provinceChange(val){
+            let params = {};
+            var pro = this.provinceList.find(item => item.name == val);
+            if(val){
+                params.parentId = pro.code;
+                queryAddress(params).then(res =>{
+                    this.cityList = res.rs;
+                })
+            }else{
+                this.cityList = [];
+            }
         },
         yearChange(val){
 
