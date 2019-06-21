@@ -4,6 +4,7 @@
     Clicked: {{ getCount }} times
     <button @click="increment">+</button>
     <button @click="decrement">-</button>
+  <div>{{this.$store.star.num}}</div>
   </div>
 </template>
 

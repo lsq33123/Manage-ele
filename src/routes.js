@@ -61,10 +61,6 @@ export default new Router({
                 path: '/compOpenApplication',
                 component: () => import('./views/compMgr/compOpenApplication.vue'),
                 name: '门店开通申请'
-            },{
-                path: '/testMap',
-                component: () => import('./views/compMgr/testMap.vue'),
-                name: '地图测试'
             }
             ]
         },
@@ -155,11 +151,21 @@ export default new Router({
             component:()=>import('./views/Home.vue'),
             name: '测试页面',
             iconCls: 'fa fa-recycle',
-            children: [{
-                path: "/selectDemo",
-                component: () => import('./views/test/selectDemoView.vue'),
-                name:'组件封装'
-            }]
+            children: [
+                {
+                    path: '/testMap',
+                    component: () => import('./views/compMgr/testMap.vue'),
+                    name: '地图测试'
+                },{
+                    path: "/selectDemo",
+                    component: () => import('./views/test/selectDemoView.vue'),
+                    name:'组件封装'
+                },{
+                    path: "/vuexTest",
+                    component: () => import('./views/test/vuexTest.vue'),
+                    name:'测试VUEX'
+                }
+            ]
         },
         {
             path: '*',
