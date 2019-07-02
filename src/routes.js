@@ -40,27 +40,27 @@ export default new Router({
             children: [{
                 path: '/compView',
                 component: () => import('./views/compMgr/compView.vue'),
-                name: '门店概览'
+                name: '总体概览'
             },{
                 path: '/compMap',
                 component: () => import('./views/compMgr/compMap.vue'),
-                name: '门店分布'
+                name: '地图分布'
             },{
                 path: '/compTzDetail',
                 component: () => import('./views/compMgr/compTzDetail.vue'),
-                name: '门店拓展概览'
+                name: '拓展概况'
             },{
                 path: '/compTzPace',
                 component: () => import('./views/compMgr/compTzPace.vue'),
-                name: '门店拓展进度'
+                name: '拓展进度'
             },{
                 path: '/compWorkshop',
                 component: () => import('./views/compMgr/compWorkshop.vue'),
-                name: '门店车间及工位'
+                name: '车间工位'
             },{
                 path: '/compOpenApplication',
                 component: () => import('./views/compMgr/compOpenApplication.vue'),
-                name: '门店开通申请'
+                name: '开通申请'
             }
             ]
         },

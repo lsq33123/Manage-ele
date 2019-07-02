@@ -99,6 +99,8 @@ export default {
                                 type: "warning"
                             });
                             this.logining = false;
+                            localStorage.setItem("token",'123');
+                            this.$router.push({ path: "/main" });
                         });
                 } else {
                     this.logining = false;

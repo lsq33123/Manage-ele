@@ -1,6 +1,8 @@
 module.exports = {
     lintOnSave: false,
-    baseUrl: "./",//配置打包时的相对路径
+    //baseUrl: "./",//配置打包时的相对路径(从 Vue CLI 3.3 起已弃用，请使用publicPath。)
+    //publicPath: "/dist/",//配置打包时的相对路径
+    publicPath: "/sys",//配置打包时的相对路径
     devServer: {
         //host:'127.0.0.1',
         //port: "8080",//代理端口

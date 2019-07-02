@@ -12,8 +12,11 @@ export const getAccidentReport = p => post('com.hsapi.bdb.Quote_Area.getAccident
 //=====================渠道管理===================================
 //获取 公共接口
 export const getBySQL = p =>post('com.hs.commons.unify.intfc.biz.ext',p);
+//获取 获取门店总店数（直营/加盟）
+export const getAllCompNum = p =>post(easyUrl +'/comp/getAllCompNum',p);
 //获取 门店分布（按省份显示的接口）
-export const queryCompProvince = p =>post('com.saas.compdevelop.expand.tProjectReport.QueryExandCompTypeWithProvince.biz.ext',p);
+//export const queryCompProvince = p =>post('com.saas.compdevelop.expand.tProjectReport.QueryExandCompTypeWithProvince.biz.ext',p);
+export const queryCompProvince = p =>post(easyUrl + '/comp/getCompGroupByPro',p);
 //获取 门店分布（按区域显示的接口）
 export const queryCompArea  = p =>post(easyUrl + '/comp/getCompGroupByArea',p);
 //export const queryCompArea  = p =>post('com.saas.compdevelop.expand.tProjectReport.QueryExandCompType.biz.ext',p);
@@ -30,7 +33,7 @@ export const getAreaList  = p =>post('build/tzCompExpand/com.saas.commons.model.
 const areaUrl = 'http://124.172.221.179/vapp/com.saas.commons.model.orgcomponent.getAreaByBI.biz.ext';
 //获取 门店列表
 const compUrl = 'http://124.172.221.179/vapp/com.saas.commons.model.orgcomponent.getUserCompGover.biz.ext';
-var vappToken = '?token='+'45ab118c-9c2d-3fc9-bb03-dece99906f1a';
+const vappToken = '?token='+'1ef23327-39e8-3189-bf53-d67aa09554e4';
 export const getVappArea = p => post(areaUrl + vappToken,p);
 export const getVappComp = p => post(compUrl + vappToken, p);
 

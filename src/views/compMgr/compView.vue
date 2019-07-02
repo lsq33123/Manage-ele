@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { getBySQL,queryCompProvince,queryCompArea } from "@/api/bdbApi";
+import { getBySQL,queryCompProvince,queryCompArea,getAllCompNum } from "@/api/bdbApi";
 import echarts from "echarts";
 import  'echarts/theme/macarons.js'
 export default {
@@ -85,20 +85,21 @@ export default {
 
     methods: {
         loadData() {
-            let params = {
-                p: {
-                    def: {
-                        ds: "WbSystem", //数据源
-                        url:
-                            "com.saas.compdevelop.exand.getExandData.getExandCompType", //命名SQL路径
-                        row2Cols: "COMPTYPE", //行转列转置列参数，多个用逗号隔开
-                        sumCols: "NUM",
-                        groupBy: "MANAGEMENT_DEPARTMENT", //行转列分组列参数，多个用逗号隔开
-                        page: false //是否分页，配合分页参数使用
-                    }
-                }
-            };
-            getBySQL(params)
+            // let params = {
+            //     p: {
+            //         def: {
+            //             ds: "WbSystem", //数据源
+            //             url:
+            //                 "com.saas.compdevelop.exand.getExandData.getExandCompType", //命名SQL路径
+            //             row2Cols: "COMPTYPE", //行转列转置列参数，多个用逗号隔开
+            //             sumCols: "NUM",
+            //             groupBy: "MANAGEMENT_DEPARTMENT", //行转列分组列参数，多个用逗号隔开
+            //             page: false //是否分页，配合分页参数使用
+            //         }
+            //     }
+            // };
+            //getBySQL(params)
+            getAllCompNum()
                 .then(res => {
                     if (res.result) {
                         let sum = res.result[0];
